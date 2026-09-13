@@ -1,71 +1,71 @@
 # 轮盘人生 · Wheel of Life
 
-[简体中文](README.md) | [English](README.en.md)
+> **转动命运的齿轮，重启一段充满未知的随机人生。**
 
-轮盘人生是一款中文随机人生游戏，在浏览器中通过命运转盘创建角色、经历事件并走向不同结局。项目使用 React、TypeScript 和 Vite，支持可重放的随机种子、自动存档及可安装内容包。
-
-[在线试玩](https://rowanjove.github.io/wheel-of-life/) · [版本发布](https://github.com/rowanjove/wheel-of-life/releases) · [报告问题](https://github.com/rowanjove/wheel-of-life/issues)
+[简体中文](README.md) | [English](README.en.md) · [🎮 立即在线试玩](https://rowanjove.github.io/wheel-of-life/) · [版本发布](https://github.com/rowanjove/wheel-of-life/releases) · [报告问题](https://github.com/rowanjove/wheel-of-life/issues)
 
 [![CI](https://github.com/rowanjove/wheel-of-life/actions/workflows/ci.yml/badge.svg)](https://github.com/rowanjove/wheel-of-life/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-当前公开版本为 **v0.3.2**，面向桌面和移动浏览器。游戏内容与界面以中文为主；英文 README 不代表游戏已完成英文本地化。微信、抖音小程序工作区处于冻结状态，不属于本次 Web 版本的交付范围。
+轮盘人生是一款中文轻度随机人生模拟网页游戏。在浏览器中转动命运轮盘，从时代、种族、容貌、天赋到伴生神器，一切皆由概率抉择。历经学院磨砺、突发事件、宗门大比与漫长岁月，探寻数十种截然不同的人生终局。
 
 ![轮盘人生桌面端角色创建界面](docs/images/02-identity-desktop.png)
 
-## 玩法与功能
+---
 
-- 创建角色：输入姓名、选择性别，使用种子随机数重放创建过程。
-- 命运转盘：生成容貌、时代、出生地、种族、命器、天赋等角色属性。
-- 人生历程：经历学院阶段、事件分支、大赛和成年线，抵达不同结局。
-- 存档恢复：自动保存当前人生；刷新后校验快照并恢复进度。
-- 内容扩展：通过内容包替换创建规则、叙事和词汇。
-- 触屏操作：转盘、按钮和对话框适配移动浏览器。
+## 游戏特色
 
-![命运转盘桌面界面](docs/images/01-web-wheel.png)
+* 🎡 **命运转盘**：告别千篇一律的开局！随手一拨，生成专属的容貌、时代、家境、命器与隐藏天赋。
+* 📜 **多分支奇遇**：从年少入学到踏入红尘，丰富的主线剧情、分支抉择与突发随机事件，每次转生都是全新体验。
+* 💾 **本地即时存档**：自动保存人生进度至浏览器本地存储，无须注册账号，关闭页面随时重连归来。
+* 🎲 **可复现种子**：支持随机种子机制，可以把绝世天骄（或极度倒霉）的开局种子分享给好友一决高下。
+* 📦 **开放内容包生态**：游戏支持通过导入 ZIP 内容包，随时加载社区自制的故事线、词库与专属转盘。
+* 📱 **全平台响应式**：深度适配桌面与手机触屏，随时随地在掌中开启一段新人生。
 
-## 本地运行
+![命运转盘界面](docs/images/01-web-wheel.png)
 
-需要 Node.js 18 或更高版本；具体依赖见 [package.json](package.json)。
+---
+
+## 5 秒开始游玩
+
+1. 直接点击打开 **[在线试玩地址](https://rowanjove.github.io/wheel-of-life/)**。
+2. 输入名字，选择性别，点击“开始命运转盘”。
+3. 迎接属于你的宿命历程！
+
+---
+
+## 本地运行与开发
+
+如果你想在本地开发、修改事件或自定义转盘内容：
 
 ```bash
+# 克隆仓库
 git clone https://github.com/rowanjove/wheel-of-life.git
 cd wheel-of-life
+
+# 安装依赖并启动本地服务
 npm ci
 npm run dev
 ```
 
-打开终端显示的地址，通常为 `http://127.0.0.1:5173/`。Windows 用户也可在安装 Node.js 后运行根目录的 `start-game.bat`。
+启动后浏览器访问终端输出的本地地址（默认 `http://localhost:5173`）即可。Windows 用户也可以双击运行根目录的 `start-game.bat`。
 
-| 命令 | 用途 |
-| --- | --- |
-| `npm run test:ci` | 单次运行测试 |
-| `npm run typecheck` | 检查 TypeScript 类型 |
-| `npm run build` | 生成生产构建 |
-| `npm run mini:install` | 安装冻结中的小程序工作区依赖 |
-| `npm run build:weapp` | 实验性微信小程序构建 |
-| `npm run build:tt` | 实验性抖音小程序构建 |
-
-## 存档与内容包
-
-当前存档保存在浏览器 localStorage，键名为 `game-life:current-run-v1`。清除站点数据会影响本地存档，存档也不会自动跨设备同步。快照带有 `packId`，与当前内容包不一致时会拒绝恢复；旧版 `douluo-*` 键支持迁移。
-
-Web 端支持通过本地 ZIP、同源 URL 或 `/extensions/catalog.json` 安装内容包。包可覆盖 `creation`、`narrative` 和 `lexicon`；安装时检查结构、effect 白名单、体积，以及 manifest 提供的 SHA-256。前端 HMAC 用于损坏检测，不构成安全授权。
-
-小程序工作区固定使用内置内容包，不能视为与浏览器扩展安装流程等价。详见 [小程序说明](miniapp/README.md)。
+---
 
 ## 项目结构
 
-- `src/content/`：内容包注册、格式与完整性校验。
-- `src/data/`：默认内容数据。
-- `src/rewrite/engine/`：规则引擎、状态转换与随机数。
-- `src/rewrite/storage/`：存档、快照和恢复校验。
-- `src/rewrite/store/`：Zustand 状态管理。
-- `src/rewrite/ui/`：React 页面、转盘和对话框。
-- `miniapp/`：冻结中的 Taro 适配工作区。
+```text
+src/
+├── content/          # 内容包校验与动态载入逻辑
+├── data/             # 内置默认剧情、词库与转盘选项
+├── rewrite/engine/   # 核心事件流转规则与随机数引擎
+├── rewrite/storage/  # 本地存档快照与数据恢复
+├── rewrite/store/    # 基于 Zustand 的全局状态管理
+└── rewrite/ui/       # React 游戏主界面与转盘动画交互
+```
 
-## 贡献与许可
+---
 
-提交前运行测试、类型检查和生产构建。流程见 [贡献指南](CONTRIBUTING.md)，发布验收见 [发布检查清单](docs/RELEASE_CHECKLIST.md)。
+## 开源协议
 
-转盘组件参考 [spin-wheel](https://github.com/CrazyTim/spin-wheel)。代码采用 [MIT License](LICENSE)；内容与署名边界见 [NOTICE](NOTICE)。不要提交未经授权的小说、动漫或游戏文本及素材；个人内容包不应混入公开发布资产。安全边界见 [SECURITY.md](SECURITY.md)。
+本项目代码遵循 [MIT License](LICENSE) 开源。欢迎提交 PR 扩充奇遇事件与剧情！
