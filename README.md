@@ -2,11 +2,11 @@
 
 > **把每一次人生抉择，都交给咔哒作响的命运转盘。**
 
-[🎮 立即在线试玩](https://rowanjove.github.io/wheel-of-life/) · [English Doc](README.en.md) · [版本发布](https://github.com/rowanjove/wheel-of-life/releases) · [提交反馈与建议](https://github.com/rowanjove/wheel-of-life/issues)
+[🎮 立即在线试玩](https://rowanjove.github.io/WOL/) · [English Doc](README.en.md) · [版本发布](https://github.com/rowanjove/WOL/releases) · [提交反馈与建议](https://github.com/rowanjove/WOL/issues)
 
-[![CI](https://github.com/rowanjove/wheel-of-life/actions/workflows/ci.yml/badge.svg)](https://github.com/rowanjove/wheel-of-life/actions/workflows/ci.yml)
+[![CI](https://github.com/rowanjove/WOL/actions/workflows/ci.yml/badge.svg)](https://github.com/rowanjove/WOL/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![GitHub Pages](https://img.shields.io/badge/Play%20Online-GitHub%20Pages-success.svg)](https://rowanjove.github.io/wheel-of-life/)
+[![GitHub Pages](https://img.shields.io/badge/Play%20Online-GitHub%20Pages-success.svg)](https://rowanjove.github.io/WOL/)
 
 ---
 
@@ -61,8 +61,8 @@
 
 ```bash
 # 1. 克隆本仓库
-git clone https://github.com/rowanjove/wheel-of-life.git
-cd wheel-of-life
+git clone https://github.com/rowanjove/WOL.git
+cd WOL
 
 # 2. 安装依赖（需 Node.js 18+）
 npm ci

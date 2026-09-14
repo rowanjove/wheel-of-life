@@ -4,9 +4,9 @@
 
 Wheel of Life is a Chinese-language life simulation game for the browser. Create a character with a fortune wheel, follow branching events, and reach different endings. Built with React, TypeScript, and Vite, it supports seeded randomness, automatic saves, and installable content packs.
 
-[Play online](https://rowanjove.github.io/wheel-of-life/) · [Releases](https://github.com/rowanjove/wheel-of-life/releases) · [Report an issue](https://github.com/rowanjove/wheel-of-life/issues)
+[Play online](https://rowanjove.github.io/WOL/) · [Releases](https://github.com/rowanjove/WOL/releases) · [Report an issue](https://github.com/rowanjove/WOL/issues)
 
-[![CI](https://github.com/rowanjove/wheel-of-life/actions/workflows/ci.yml/badge.svg)](https://github.com/rowanjove/wheel-of-life/actions/workflows/ci.yml)
+[![CI](https://github.com/rowanjove/WOL/actions/workflows/ci.yml/badge.svg)](https://github.com/rowanjove/WOL/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 The current public version is **v0.3.2**, targeting desktop and mobile browsers. The game interface and content are primarily Chinese; this English README does not imply an English game localization. The WeChat and Douyin miniapp workspace is frozen and is not part of this Web release.
@@ -29,8 +29,8 @@ The current public version is **v0.3.2**, targeting desktop and mobile browsers.
 Requires Node.js 18 or later. See [package.json](package.json) for the project's dependencies.
 
 ```bash
-git clone https://github.com/rowanjove/wheel-of-life.git
-cd wheel-of-life
+git clone https://github.com/rowanjove/WOL.git
+cd WOL
 npm ci
 npm run dev
 ```
