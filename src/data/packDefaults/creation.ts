@@ -31,7 +31,7 @@ export const BASE_CREATION: CreationContent = {
   races: [
     { id: 'human', race: 'human', raceName: '人族', weight: 78 },
     { id: 'half-beast', race: 'half-beast', raceName: '半灵兽', weight: 12 },
-    { id: 'soul-beast', race: 'soul-beast', raceName: '十万年灵兽', weight: 5 },
+    { id: 'soul-beast', race: 'soul-beast', raceName: '太古化形神兽', weight: 5 },
     { id: 'divine', race: 'divine', raceName: '神裔', weight: 3 },
     { id: 'ghost', race: 'ghost', raceName: '鬼族·幽灵', weight: 2 },
   ],

@@ -4,8 +4,8 @@ import { resolveHeroInteraction } from './heroInteraction'
 import {
   confirmAdultYear,
   confirmContestRound,
-  confirmSoulBeastCultivation,
-  confirmSoulBeastRace,
+  confirmBeastCultivation,
+  confirmBeastRace,
   finishLife,
   startContest,
 } from './lateGame'
@@ -64,8 +64,8 @@ describe('late game state machine', () => {
     ).toBe(true)
   })
 
-  it('sends soul beasts directly into cultivation without creating a school', () => {
-    const next = confirmSoulBeastRace(matureRun())
+  it('sends beasts directly into cultivation without creating a school', () => {
+    const next = confirmBeastRace(matureRun())
 
     expect(next.flow).toEqual({
       phase: 'soul-beast',
@@ -99,10 +99,10 @@ describe('late game state machine', () => {
     expect(afterTang.character.titles).toContain('命运对手')
   })
 
-  it('resolves soul beast cultivation conflicts into adult life', () => {
-    const cultivated = confirmSoulBeastCultivation(
+  it('resolves beast cultivation conflicts into adult life', () => {
+    const cultivated = confirmBeastCultivation(
       {
-        ...confirmSoulBeastRace(matureRun()),
+        ...confirmBeastRace(matureRun()),
         flow: {
           phase: 'soul-beast',
           step: 'cultivation-year-1',
@@ -121,7 +121,7 @@ describe('late game state machine', () => {
       step: 'event-count',
       status: 'ready',
     })
-    expect(afterTang.character.flags).toContain('tang-san-loss')
+    expect(afterTang.character.flags).toContain('hero-loss')
   })
 
   it('creates a completed ending and a read-only history entry', () => {

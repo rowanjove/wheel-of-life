@@ -47,3 +47,13 @@ it('never exposes internal flow identifiers on transition routes', () => {
   expect(screen.getByRole('heading', { name: '阶段小结' })).toBeVisible()
   expect(screen.queryByText(/primary-school|stage-summary|\//)).not.toBeInTheDocument()
 })
+
+it('routes bone-choice step to the destiny wheel screen', () => {
+  const run = createRun(42, '2026-06-20T00:00:00.000Z', 'run-1')
+  run.flow = { phase: 'adult', step: 'bone-choice', status: 'ready' }
+
+  render(<RewriteRouter run={run} dispatch={vi.fn()} onRestart={vi.fn()} />)
+
+  expect(screen.getByTestId('destiny-wheel')).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: /抉择/ })).toBeVisible()
+})

@@ -1,0 +1,61 @@
+{
+  "world": "modern",
+  "totalRuns": 1000,
+  "policy": "balanced",
+  "durationMs": 695,
+  "lifespans": {
+    "average": 74.4,
+    "median": 81,
+    "min": 34,
+    "max": 99
+  },
+  "averageDecisions": 31.9,
+  "averageWheels": 42.8,
+  "endingDistribution": {
+    "ending-natural-life": {
+      "count": 852,
+      "percentage": 85.2
+    },
+    "ending-wealthy-tycoon": {
+      "count": 147,
+      "percentage": 14.7
+    },
+    "natural-end": {
+      "count": 1,
+      "percentage": 0.1
+    }
+  },
+  "originDistribution": {
+    "origin-business-family": {
+      "count": 321,
+      "percentage": 32.1
+    },
+    "origin-academic-family": {
+      "count": 385,
+      "percentage": 38.5
+    },
+    "origin-working-class": {
+      "count": 294,
+      "percentage": 29.4
+    }
+  },
+  "eventTriggerCounts": {
+    "幼儿抓周：抓起一本带插图的精装书籍": 334,
+    "流年静好": 3000,
+    "书山求索·学堂时光": 13836,
+    "高考冲刺抉择：报考前沿理工科，刻苦攻关": 481,
+    "深夜突发急症：立即打车前往医院急诊就医": 5648,
+    "职场奔波·生活沉淀": 18192,
+    "初入职场大浪淘沙：入职知名互联网/科技大厂": 330,
+    "资本市场激流暗涌：敏锐进场，把握趋势机遇": 10905,
+    "退休闲适·颐养天年": 6789,
+    "安详辞世，终成圆满": 637,
+    "幼儿抓周：抓起一枚金光闪闪的算盘挂坠": 333,
+    "高考冲刺抉择：报考经管商科，着眼广阔天地": 485,
+    "深夜突发急症：硬抗到天亮再去药店买药": 4370,
+    "初入职场大浪淘沙：考取基层公共事业单位，追求稳健": 329,
+    "资本市场激流暗涌：保持冷静，不买看不懂的标的": 8026,
+    "幼儿抓周：欢快地抱起一把木质小刀剑": 333,
+    "初入职场大浪淘沙：拉上好友自主创业摸爬滚打": 329
+  }
+}

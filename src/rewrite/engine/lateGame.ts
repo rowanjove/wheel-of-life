@@ -19,10 +19,10 @@ import { applyLevelChange, normalizeLevel } from './progression'
 import { createSeededRng } from './rng'
 import { bonusEventCount } from './schoolSelection'
 import {
-  emptySoulBones,
-  type SoulBoneSlot,
-  tryRollSoulBone,
-} from './soulBones'
+  emptyBones,
+  type BoneSlot,
+  tryRollBone,
+} from './bones'
 import type { Flow, RewriteRun } from './model'
 
 export type ContestOutcome = ContestDetailOutcome
@@ -126,23 +126,23 @@ export function needsAscensionChoice(run: RewriteRun): boolean {
     || character.talentId === 'divine-protection'
 }
 
-const SOUL_BEAST_START_BONES: Array<{ slot: SoulBoneSlot; name: string }> = [
+const BEAST_START_BONES: Array<{ slot: BoneSlot; name: string }> = [
   { slot: 'head', name: '兽王头骨' },
   { slot: 'torso', name: '兽王躯干骨' },
   { slot: 'wing', name: '兽王翅骨' },
 ]
 
-function bootstrapSoulBeastCharacter(
+function bootstrapBeastCharacter(
   character: RewriteRun['character'],
 ): RewriteRun['character'] {
-  const soulBones = emptySoulBones()
-  for (const bone of SOUL_BEAST_START_BONES) {
-    soulBones[bone.slot] = {
+  const bones = emptyBones()
+  for (const bone of BEAST_START_BONES) {
+    bones[bone.slot] = {
       id: `beast-born-${bone.slot}`,
       slot: bone.slot,
       quality: 'legendary',
       name: bone.name,
-      source: '十万年本命灵骨',
+      source: '太古本命灵骨',
     }
   }
   return {
@@ -151,8 +151,8 @@ function bootstrapSoulBeastCharacter(
     maxLevel: 120,
     innatePower: 10,
     growthMultiplier: 1.2,
-    soulBones,
-    flags: [...new Set([...character.flags, 'soul-beast-born'])],
+    bones,
+    flags: [...new Set([...character.flags, 'beast-born', 'soul-beast-born'])],
   }
 }
 
@@ -241,10 +241,10 @@ export function confirmContestRound(
   }
 
   if (round === 'final' && advances && (outcome === 'crush-win' || outcome === 'win')) {
-    next = tryRollSoulBone(next, {
+    next = tryRollBone(next, {
       quality: 'rare',
       chance: 60,
-      source: '全陆大赛冠军',
+      source: '精英联赛冠军',
     })
   }
 
@@ -392,7 +392,7 @@ export function continueAdultEndingCheck(run: RewriteRun): RewriteRun {
   }
 }
 
-export function soulBeastCultivationOptions(): WheelOption<number>[] {
+export function beastCultivationOptions(): WheelOption<number>[] {
   return [
     { id: 'beast-cultivation-1000', name: '千年潜修', description: '避世修炼一千年。', weight: 55, color: '#cfc8ef', value: 1000 },
     { id: 'beast-cultivation-10000', name: '万年沉眠', description: '以漫长岁月积蓄力量。', weight: 30, color: '#9fb3d1', value: 10000 },
@@ -400,13 +400,13 @@ export function soulBeastCultivationOptions(): WheelOption<number>[] {
   ]
 }
 
-export function confirmSoulBeastRace(run: RewriteRun): RewriteRun {
+export function confirmBeastRace(run: RewriteRun): RewriteRun {
   return {
     ...run,
-    character: bootstrapSoulBeastCharacter({
+    character: bootstrapBeastCharacter({
       ...run.character,
       race: 'soul-beast',
-      raceName: '十万年灵兽',
+      raceName: '太古神兽',
       schoolRecords: [],
     }),
     flow: { phase: 'soul-beast', step: 'cultivation-year-1', status: 'ready' },
@@ -414,7 +414,7 @@ export function confirmSoulBeastRace(run: RewriteRun): RewriteRun {
   }
 }
 
-export function confirmSoulBeastCultivation(
+export function confirmBeastCultivation(
   run: RewriteRun,
   years: number,
 ): RewriteRun {
@@ -425,7 +425,7 @@ export function confirmSoulBeastCultivation(
         ...run.character,
         race: 'half-beast',
         raceName: '化形灵兽',
-        flags: [...new Set([...run.character.flags, 'soul-beast-transformed'])],
+        flags: [...new Set([...run.character.flags, 'beast-transformed', 'soul-beast-transformed'])],
       },
       flow: { phase: 'adult', step: 'event-count', status: 'ready' },
       pending: null,

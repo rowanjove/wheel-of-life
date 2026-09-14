@@ -1,9 +1,9 @@
 import type { RewriteCharacter } from './model'
-import type { RingModifiers } from './soulRings'
+import type { RingModifiers } from './rings'
 import type { WheelOption } from './creation'
 
 export function heroInteractionCooldownYears(talentId: string | null): number {
-  return talentId === 'tang-san-rival' ? 1 : 5
+  return talentId === 'hero-rival' ? 1 : 5
 }
 
 export function canStartHeroInteraction(character: RewriteCharacter): boolean {

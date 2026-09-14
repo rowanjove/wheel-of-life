@@ -9,7 +9,7 @@ export type EndingDefinition = {
 
 export const endingDefinitions: EndingDefinition[] = [
   { id: 'divine-companion', name: '天境同行', title: '灵元之神', comment: '你越过人间极限，与群星并肩。' },
-  { id: 'human-god', name: '人间封神', title: '守护灵元', comment: '你拥有神位之力，却选择守望人间。' },
+  { id: 'human-god', name: '人间封神', title: '守护灵元', comment: '你拥有至尊之力，却选择守望人间。' },
   { id: 'legend-finale', name: '传奇落幕', title: '封号灵尊', comment: '你的名号被大陆铭记，岁月不能磨灭。' },
   { id: 'hero-rest', name: '英雄长眠', title: '时代英雄', comment: '你曾为时代挺身而出，后来者仍传颂你的故事。' },
   { id: 'ordinary-life', name: '平凡一生', title: '时代过客', comment: '你没有站在顶峰，却认真走完了自己的道路。' },

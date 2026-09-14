@@ -1,29 +1,55 @@
-/* Mineral-and-brass destiny instrument. */
+/* Celestial Astrolabe destiny instrument — 天衍星盘仪 */
 
 .rewrite-game .destiny-wheel {
-  --wheel-size: min(78vw, 360px);
+  --wheel-size: min(80vw, 370px);
   width: var(--wheel-size);
   height: var(--wheel-size);
   aspect-ratio: 1;
   position: relative;
   isolation: isolate;
-  margin: 28px auto 12px;
+  margin: 26px auto 14px;
   border-radius: 50%;
+  filter: drop-shadow(0 16px 36px rgba(26, 45, 78, .12));
 }
 
 .destiny-wheel__ring {
   position: absolute;
-  inset: -10px;
+  inset: -14px;
   z-index: 0;
   border-radius: 50%;
   pointer-events: none;
   background:
-    radial-gradient(circle, transparent 62%, rgba(255,250,232,.96) 63% 68%, transparent 69%),
-    repeating-conic-gradient(from 0deg, #b68a42 0 2deg, #e7d4a7 2deg 15deg);
+    radial-gradient(circle, transparent 66%, rgba(255,255,255,.9) 67% 70%, transparent 71%),
+    conic-gradient(
+      from 0deg,
+      #cf9e48,
+      #faebc9 30deg,
+      #ba8432 60deg,
+      #faebc9 90deg,
+      #d4a654 120deg,
+      #fff4dc 150deg,
+      #b37c2a 180deg,
+      #f8e9c6 210deg,
+      #c4923e 240deg,
+      #faebc9 270deg,
+      #ad7725 300deg,
+      #faebc9 330deg,
+      #cf9e48 360deg
+    );
   box-shadow:
-    0 0 0 1px rgba(103, 72, 26, .38),
-    0 0 0 6px rgba(255,251,236,.7),
-    0 18px 42px rgba(63, 49, 29, .2);
+    0 0 0 1px rgba(160, 115, 40, .45),
+    0 0 0 6px rgba(255, 255, 255, .85),
+    0 0 0 7px rgba(200, 150, 60, .3),
+    0 20px 48px rgba(35, 55, 90, .18);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.destiny-wheel__ring::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  border: 1px dashed rgba(135, 95, 30, .4);
 }
 
 .destiny-wheel__canvas-host {
@@ -34,8 +60,10 @@
   height: 100%;
   overflow: hidden;
   border-radius: 50%;
-  background: #ebe3d3;
-  box-shadow: inset 0 0 0 2px rgba(255,255,255,.7);
+  background: #f8fafc;
+  box-shadow:
+    inset 0 0 0 3px rgba(255, 255, 255, .9),
+    inset 0 0 16px rgba(30, 50, 80, .14);
   touch-action: none;
 }
 
@@ -46,57 +74,68 @@
   border-radius: 50%;
 }
 
-/* Dense probability tables are intentionally label-free. This keeps the
-   wheel legible instead of shrinking Chinese glyphs into visual noise. */
+/* Dense probability tables */
 .destiny-wheel--dense .destiny-wheel__canvas-host {
   box-shadow:
-    inset 0 0 0 2px rgba(255,255,255,.72),
-    inset 0 0 34px rgba(26, 43, 66, .12);
+    inset 0 0 0 3px rgba(255, 255, 255, .95),
+    inset 0 0 24px rgba(20, 40, 70, .18);
 }
 
-/* Top pointer */
+/* Top pointer — 凌厉立体的赤金灵羽指针 */
 .destiny-wheel__pointer {
   position: absolute;
   left: 50%;
-  top: -18px;
+  top: -20px;
   z-index: 12;
+  width: 24px;
+  height: 32px;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 4px 8px rgba(20, 30, 50, .28));
+}
+
+.destiny-wheel__pointer::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
   width: 0;
   height: 0;
-  transform: translateX(-50%);
-  border-left: 11px solid transparent;
-  border-right: 11px solid transparent;
-  border-top: 22px solid #5f431d;
-  filter: drop-shadow(0 2px 3px rgba(0,0,0,.18));
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 26px solid #825217;
 }
 
 .destiny-wheel__pointer::after {
   content: "";
   position: absolute;
   left: 50%;
-  top: -20px;
+  top: 1px;
+  transform: translateX(-50%);
   width: 0;
   height: 0;
-  transform: translateX(-50%);
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-top: 14px solid #d4ad63;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 22px solid #ffd875;
 }
 
-/* Center hub */
+/* Center hub — 乾坤星枢法珠 */
 .destiny-wheel__hub {
   position: absolute;
   left: 50%;
   top: 50%;
   z-index: 10;
-  width: clamp(72px, 22%, 88px);
+  width: clamp(74px, 23%, 90px);
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  padding: 3px;
-  background: linear-gradient(145deg, #fffaf0, #b98a43);
+  padding: 4px;
+  background:
+    radial-gradient(circle at 35% 30%, #ffffff, #f2dc9b 55%, #a67325);
   box-shadow:
-    0 0 0 1px rgba(60, 100, 150, .2),
-    0 8px 20px rgba(40, 70, 110, .18);
+    0 0 0 2px rgba(255, 255, 255, .9),
+    0 0 0 4px rgba(185, 135, 45, .4),
+    0 10px 24px rgba(25, 45, 80, .22);
 }
 
 .destiny-wheel__hub button {
@@ -112,21 +151,39 @@
   gap: 2px;
   border: none !important;
   border-radius: 50% !important;
-  color: #1e3f6b;
-  background: radial-gradient(circle at 35% 28%, #fffdf7, #ead8ad 58%, #ae7e37);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
-  font-size: 12px;
+  color: #162a45;
+  background:
+    radial-gradient(circle at 38% 30%, #ffffff 0%, #fff7e4 42%, #edd08e 75%, #b5802c 100%);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, .95),
+    inset 0 -2px 5px rgba(120, 80, 20, .3);
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0 !important;
   transform: none !important;
+  cursor: pointer;
+  transition: filter .2s ease, transform .15s ease;
 }
 
 .destiny-wheel--animating .destiny-wheel__ring {
-  animation: astrolabe-pulse 1.1s ease-in-out infinite alternate;
+  animation: astrolabe-pulse 1.2s ease-in-out infinite alternate;
 }
 
 @keyframes astrolabe-pulse {
-  to { box-shadow: 0 0 0 1px rgba(103,72,26,.48), 0 0 0 7px rgba(255,246,210,.78), 0 22px 52px rgba(93,65,25,.28); }
+  0% {
+    box-shadow:
+      0 0 0 1px rgba(160, 115, 40, .45),
+      0 0 0 6px rgba(255, 255, 255, .85),
+      0 0 0 7px rgba(200, 150, 60, .3),
+      0 20px 48px rgba(35, 55, 90, .18);
+  }
+  100% {
+    box-shadow:
+      0 0 0 2px rgba(205, 155, 55, .7),
+      0 0 0 8px rgba(255, 248, 225, .95),
+      0 0 0 10px rgba(225, 175, 75, .5),
+      0 24px 60px rgba(195, 145, 50, .35);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -134,15 +191,21 @@
 }
 
 .rewrite-game .destiny-wheel__hub button:hover:not(:disabled) {
-  transform: none !important;
-  filter: brightness(1.03);
-  box-shadow: inset 0 1px 0 #fff, 0 0 0 2px rgba(90, 150, 220, .35);
+  transform: scale(1.03) !important;
+  filter: brightness(1.05) saturate(1.1);
+  box-shadow:
+    inset 0 2px 5px rgba(255, 255, 255, 1),
+    0 0 14px rgba(215, 165, 60, .5);
+}
+
+.rewrite-game .destiny-wheel__hub button:active:not(:disabled) {
+  transform: scale(0.97) !important;
 }
 
 .destiny-wheel__hub button span {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: .02em;
   line-height: 1;
 }
 

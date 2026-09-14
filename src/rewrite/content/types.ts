@@ -7,7 +7,7 @@ export type ContentSpiritQuality =
   | '超绝'
   | '神级'
   | '传说'
-  | '神王'
+  | '至尊'
 
 export type ContentSpirit = {
   id: string
@@ -83,7 +83,7 @@ export type ContentActivity =
   | { kind: 'ending'; endingId: EndingId }
 
 export interface ContentRelationshipState {
-  spiritHall: number
+  sanctuary: number
   empire: number
   beasts: number
   reputation: number

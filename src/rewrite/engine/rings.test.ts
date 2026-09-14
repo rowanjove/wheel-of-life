@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { createRun } from './factory'
-import type { SoulRingState } from './model'
+import type { RingState } from './model'
 import {
   BASE_RING_WEIGHTS,
   buildLegalRingBins,
@@ -9,10 +9,10 @@ import {
   queueMissingRingActivities,
   rollYearsWithinBin,
   totalWeightByQuality,
-} from './soulRings'
+} from './rings'
 import { createSeededRng } from './rng'
 
-describe('strict soul ring rules', () => {
+describe('strict ring rules', () => {
   it.each([
     [10, 'white'], [99, 'white'],
     [100, 'yellow'], [999, 'yellow'],
@@ -45,12 +45,12 @@ describe('strict soul ring rules', () => {
   })
 
   it('queues every missing ring threshold in order', () => {
-    const rings: SoulRingState[] = [{
+    const rings: RingState[] = [{
       id: 'ring-1',
       index: 1,
       years: 90,
       quality: 'white',
-      skillName: '第一魂技',
+      skillName: '第一命技',
       description: '',
     }]
     expect(missingRingIndexes(36, [])).toEqual([1, 2, 3])
@@ -68,7 +68,7 @@ describe('strict soul ring rules', () => {
   it('can build a sixth-ring wheel for an existing character', () => {
     const run = createRun(42, '2026-06-20T00:00:00.000Z', 'run-1')
     expect(buildLegalRingBins(6, 9_999, {}).some((bin) => bin.quality === 'black')).toBe(true)
-    expect(run.character.soulRings).toEqual([])
+    expect(run.character.rings).toEqual([])
   })
 
   it('returns directly to the requested flow when no ring is missing', () => {

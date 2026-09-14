@@ -18,6 +18,7 @@ import { GameShell } from '../ui/shell/GameShell'
 import { RecoveryBoundary } from '../ui/shell/RecoveryBoundary'
 import { createResilientStorage, createRuntimeId } from '../platform/runtime'
 import { RewriteRouter } from './RewriteRouter'
+import { WOLApp } from '../../engine/ui/WOLApp'
 
 type RewriteAppProps = {
   repository?: RewriteRepository
@@ -61,17 +62,82 @@ export function RewriteApp({
   const history = useStore(store, (state) => state.history)
   const error = useStore(store, (state) => state.error)
 
+  const [wol2Active, setWol2Active] = useState(() => {
+    try {
+      return (
+        globalThis.localStorage?.getItem('wol_mode') === '2' ||
+        new URLSearchParams(globalThis.location?.search).get('mode') === '2'
+      )
+    } catch {
+      return false
+    }
+  })
+
+  if (wol2Active) {
+    return (
+      <div className="wol-wrapper">
+        <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '0.4rem 1rem', background: '#0b0f19', borderBottom: '1px solid rgba(148, 163, 184, 0.15)' }}>
+          <button
+            type="button"
+            style={{
+              background: '#1e293b',
+              color: '#38bdf8',
+              border: '1px solid #475569',
+              borderRadius: 4,
+              padding: '0.25rem 0.75rem',
+              cursor: 'pointer',
+              fontSize: '0.85rem',
+            }}
+            onClick={() => {
+              try {
+                globalThis.localStorage?.setItem('wol_mode', '1')
+              } catch {}
+              setWol2Active(false)
+            }}
+          >
+            ← 返回经典主题
+          </button>
+        </div>
+        <WOLApp />
+      </div>
+    )
+  }
+
   return (
-    <GameShell
-      character={run.character}
-      history={history}
-      onRefresh={() => store.getState().refresh()}
-      showStatus={run.flow.step !== 'identity'}
-      onPackChanged={() => {
-        store.getState().restart()
-        setPackEpoch((value) => value + 1)
-      }}
-    >
+    <>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '0.35rem 1rem', background: '#0b0f19', borderBottom: '1px solid rgba(148, 163, 184, 0.15)' }}>
+        <button
+          type="button"
+          style={{
+            background: 'linear-gradient(135deg, #0284c7 0%, #38bdf8 100%)',
+            color: '#0f172a',
+            fontWeight: 600,
+            border: 'none',
+            borderRadius: 4,
+            padding: '0.2rem 0.65rem',
+            cursor: 'pointer',
+            fontSize: '0.8rem',
+          }}
+          onClick={() => {
+            try {
+              globalThis.localStorage?.setItem('wol_mode', '2')
+            } catch {}
+            setWol2Active(true)
+          }}
+        >
+          ✨ 体验 2.0 多世界轮盘（修仙 / 武侠 / 都市）
+        </button>
+      </div>
+      <GameShell
+        character={run.character}
+        history={history}
+        onRefresh={() => store.getState().refresh()}
+        showStatus={run.flow.step !== 'identity'}
+        onPackChanged={() => {
+          store.getState().restart()
+          setPackEpoch((value) => value + 1)
+        }}
+      >
       <span hidden data-testid="pack-epoch">{packEpoch}</span>
       {error ? (
         <RecoveryBoundary
@@ -88,5 +154,6 @@ export function RewriteApp({
         />
       )}
     </GameShell>
+    </>
   )
 }

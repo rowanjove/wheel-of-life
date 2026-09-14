@@ -1,0 +1,1362 @@
+/* WOL 2.0 命运轮盘现代人生模拟器主视觉风格 */
+
+.wol-creation-screen {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  color: #e2e8f0;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.wol-creation-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.wol-creation-title {
+  font-size: 2rem;
+  letter-spacing: 0.2em;
+  color: #f1f5f9;
+  margin-bottom: 0.5rem;
+}
+
+.wol-creation-subtitle {
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+.wol-section {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(8px);
+}
+
+.wol-section-title {
+  font-size: 1.25rem;
+  color: #38bdf8;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.wol-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* 世界标签选择 */
+.wol-world-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.wol-world-tab {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid transparent;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.wol-world-tab.active {
+  border-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  color: #f8fafc;
+}
+
+.wol-world-desc {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+/* 姓名输入与出身 */
+.wol-input-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.wol-text-input {
+  background: #0f172a;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  color: #f8fafc;
+  font-size: 1rem;
+  outline: none;
+}
+
+.wol-text-input:focus {
+  border-color: #38bdf8;
+}
+
+.wol-origins-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.75rem;
+}
+
+.wol-origin-card {
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  color: #cbd5e1;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.wol-origin-card.selected {
+  border-color: #eab308;
+  background: rgba(234, 179, 8, 0.1);
+  color: #fef08a;
+}
+
+.wol-origin-card-title {
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.wol-origin-card-desc {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+/* 天赋抽卡 */
+.wol-talents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+}
+
+.wol-talent-card {
+  padding: 0.85rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  text-align: left;
+  cursor: pointer;
+  color: #cbd5e1;
+  transition: all 0.2s;
+}
+
+.wol-talent-card.selected {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.12);
+  color: #a7f3d0;
+}
+
+.wol-talent-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+}
+
+.wol-rarity {
+  font-size: 0.75rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+.wol-rarity.r-1 { background: #334155; color: #94a3b8; }
+.wol-rarity.r-2 { background: #1e3a8a; color: #93c5fd; }
+.wol-rarity.r-3 { background: #581c87; color: #d8b4fe; }
+
+/* 属性点分配 */
+.wol-points-box {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wol-points-box strong {
+  font-size: 1.3rem;
+  color: #38bdf8;
+}
+
+.wol-quick-btn-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.wol-small-btn {
+  background: #334155;
+  color: #cbd5e1;
+  border: none;
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.wol-small-btn:hover {
+  background: #475569;
+}
+
+.wol-stats-alloc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.wol-stat-alloc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 1rem;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 6px;
+}
+
+.wol-stat-name strong {
+  font-size: 1rem;
+  margin-right: 0.75rem;
+}
+
+.wol-stat-name span {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.wol-stat-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.wol-stepper-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  border: 1px solid #475569;
+  background: #1e293b;
+  color: #f8fafc;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.wol-stepper-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.wol-stat-val {
+  min-width: 2.5rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #38bdf8;
+}
+
+/* 确认开始主按钮 */
+.wol-creation-footer {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.wol-primary-cta {
+  background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.15em;
+  padding: 0.85rem 3rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.wol-primary-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+}
+
+/* 主游戏界面整体布局 */
+.wol-game-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at center top, #1e293b 0%, #090d16 100%);
+  color: #f8fafc;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* 顶部状态栏 */
+.wol-status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: rgba(15, 23, 42, 0.85);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.wol-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.wol-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #38bdf8 0%, #0369a1 100%);
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.wol-char-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wol-name {
+  font-size: 1.1rem;
+}
+
+.wol-world-tag {
+  background: #334155;
+  color: #38bdf8;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.wol-stage-tag {
+  background: rgba(234, 179, 8, 0.2);
+  color: #fde047;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.wol-char-time {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.wol-dot {
+  margin: 0 0.25rem;
+}
+
+.wol-header-stats {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.wol-stat-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(30, 41, 59, 0.6);
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.wol-stat-pill-label {
+  font-size: 0.7rem;
+  color: #94a3b8;
+}
+
+.wol-stat-pill-val {
+  font-size: 0.95rem;
+  color: #38bdf8;
+}
+
+.wol-restart-btn {
+  background: #334155;
+  color: #cbd5e1;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* 核心轮盘容器：绝对主视觉中心 */
+.wol-wheel-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.wol-wheel-eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.wol-wheel-title {
+  font-size: 1.75rem;
+  color: #f1f5f9;
+  margin: 0.25rem 0;
+}
+
+.wol-wheel-hint {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+.wol-wheel-stage {
+  margin: 0.5rem auto;
+  max-width: 500px;
+  width: 100%;
+}
+
+/* 底部 HUD 选项卡 */
+.wol-hud-panel {
+  background: rgba(15, 23, 42, 0.9);
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+  backdrop-filter: blur(12px);
+  padding: 0.75rem 1.5rem 1.25rem;
+}
+
+.wol-hud-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+  margin-bottom: 1rem;
+}
+
+.wol-hud-tab {
+  background: transparent;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.wol-hud-tab.active {
+  color: #38bdf8;
+  border-bottom-color: #38bdf8;
+  font-weight: 600;
+}
+
+.wol-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.85rem;
+}
+
+.wol-stat-card {
+  background: rgba(30, 41, 59, 0.5);
+  padding: 0.65rem 0.85rem;
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.wol-stat-card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.wol-stat-card-title {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+}
+
+.wol-stat-card-val {
+  font-size: 0.95rem;
+  color: #38bdf8;
+}
+
+.wol-stat-bar-track {
+  height: 6px;
+  background: #334155;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 0.35rem;
+}
+
+.wol-stat-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0284c7, #38bdf8);
+  transition: width 0.3s ease;
+}
+
+.wol-stat-card-desc {
+  font-size: 0.75rem;
+  color: #64748b;
+  display: block;
+}
+
+/* 天赋与特质展示 */
+.wol-badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.wol-talent-pill, .wol-trait-pill {
+  display: flex;
+  flex-direction: column;
+  background: rgba(30, 41, 59, 0.7);
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.wol-talent-pill strong {
+  color: #a7f3d0;
+  font-size: 0.85rem;
+}
+
+.wol-trait-pill strong {
+  color: #fde047;
+  font-size: 0.85rem;
+}
+
+.wol-talent-pill span, .wol-trait-pill span {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+/* 背包 */
+.wol-inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.wol-item-card {
+  background: rgba(30, 41, 59, 0.6);
+  padding: 0.65rem 0.85rem;
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.wol-item-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.wol-item-qty {
+  color: #38bdf8;
+  font-weight: bold;
+}
+
+.wol-item-desc {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* 大事记 */
+.wol-history-timeline {
+  max-height: 160px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.wol-history-entry {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  border-left: 2px solid #38bdf8;
+  padding-left: 0.75rem;
+}
+
+.wol-history-time {
+  color: #64748b;
+  min-width: 90px;
+}
+
+.wol-history-title {
+  color: #f1f5f9;
+}
+
+.wol-history-desc {
+  margin: 0.15rem 0 0;
+  color: #94a3b8;
+  font-size: 0.8rem;
+}
+
+/* 事件弹窗 */
+.wol-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 999;
+  backdrop-filter: blur(6px);
+}
+
+.wol-modal-card {
+  max-width: 580px;
+  width: 100%;
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 12px;
+  padding: 1.75rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.wol-event-category-pill {
+  display: inline-block;
+  font-size: 0.75rem;
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.wol-modal-title {
+  font-size: 1.4rem;
+  margin: 0 0 1rem;
+  color: #f8fafc;
+}
+
+.wol-event-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin-bottom: 1.5rem;
+}
+
+.wol-options-heading {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  margin-bottom: 0.75rem;
+}
+
+.wol-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.wol-option-btn {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid #475569;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  color: #f8fafc;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wol-option-btn:hover:not(.disabled) {
+  border-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+}
+
+.wol-option-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.wol-lock-hint {
+  font-size: 0.75rem;
+  color: #f87171;
+}
+
+.wol-result-box {
+  background: rgba(15, 23, 42, 0.6);
+  border-left: 4px solid #10b981;
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+
+.wol-result-badge {
+  font-size: 0.75rem;
+  color: #34d399;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+.wol-result-text {
+  color: #e2e8f0;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.wol-modal-footer {
+  margin-top: 1.5rem;
+  text-align: right;
+}
+
+.wol-continue-btn {
+  background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+  color: #0f172a;
+  font-weight: bold;
+  padding: 0.65rem 1.75rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+/* 终局界面 */
+.wol-ending-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: radial-gradient(circle at center, #1e1b4b 0%, #030712 100%);
+}
+
+.wol-ending-card {
+  max-width: 640px;
+  width: 100%;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+}
+
+.wol-ending-tag {
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  color: #c084fc;
+}
+
+.wol-ending-title {
+  font-size: 2rem;
+  color: #f5f3ff;
+  margin: 0.5rem 0;
+}
+
+.wol-ending-reason {
+  color: #a855f7;
+  font-style: italic;
+  margin-bottom: 1.75rem;
+}
+
+.wol-ending-stats-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  background: rgba(30, 41, 59, 0.6);
+  padding: 1.25rem 0.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.75rem;
+}
+
+.wol-ending-stat-box .label {
+  display: block;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-bottom: 0.25rem;
+}
+
+.wol-ending-stat-box .val {
+  font-size: 1.15rem;
+  color: #e9d5ff;
+}
+
+.wol-ending-stats-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.wol-ending-stat-row {
+  background: rgba(15, 23, 42, 0.4);
+  padding: 0.4rem 0.65rem;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+.wol-restart-cta {
+  margin-top: 2rem;
+  background: linear-gradient(135deg, #9333ea 0%, #c084fc 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  padding: 0.85rem 2.5rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+}
+
+/* 背包物品操作与辐射加权 */
+.wol-item-actions {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.wol-item-use-btn {
+  background: rgba(56, 189, 248, 0.2);
+  border: 1px solid #38bdf8;
+  color: #38bdf8;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wol-item-use-btn:hover {
+  background: #38bdf8;
+  color: #0f172a;
+}
+
+.wol-item-radiation {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.wol-radiation-tag {
+  font-size: 0.75rem;
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.15);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+/* 概率透视器 (Probability Inspector) */
+.wol-inspector-modal {
+  background: #0f172a;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 16px;
+  padding: 1.75rem;
+  max-width: 760px;
+  width: 90vw;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.wol-inspector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+  padding-bottom: 1rem;
+}
+
+.wol-inspector-eyebrow {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #38bdf8;
+  display: block;
+}
+
+.wol-inspector-title {
+  font-size: 1.35rem;
+  color: #f8fafc;
+  margin: 0.25rem 0 0 0;
+}
+
+.wol-pity-hud {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.wol-pity-card {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.wol-pity-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.wol-pity-val {
+  font-size: 1rem;
+  color: #f1f5f9;
+}
+
+.wol-pity-sub {
+  font-size: 0.8rem;
+  color: #38bdf8;
+}
+
+.wol-filter-chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.wol-filter-chip {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: #94a3b8;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wol-filter-chip.active {
+  background: #38bdf8;
+  color: #0f172a;
+  font-weight: 600;
+  border-color: #38bdf8;
+}
+
+.wol-candidates-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.wol-pool-summary {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.wol-candidate-card {
+  background: rgba(30, 41, 59, 0.45);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wol-candidate-card:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  background: rgba(30, 41, 59, 0.7);
+}
+
+.wol-candidate-card.expanded {
+  border-color: #38bdf8;
+}
+
+.wol-candidate-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.wol-candidate-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wol-candidate-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.wol-candidate-cat {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(148, 163, 184, 0.15);
+  color: #cbd5e1;
+}
+
+.wol-candidate-metrics {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.wol-candidate-pct {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+.wol-candidate-wt {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.wol-prob-bar-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.wol-prob-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8 0%, #818cf8 100%);
+  border-radius: 2px;
+}
+
+.wol-candidate-breakdown {
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed rgba(148, 163, 184, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.wol-bd-row {
+  display: flex;
+  justify-content: space-between;
+  color: #94a3b8;
+}
+
+.wol-bd-row strong {
+  color: #f1f5f9;
+}
+
+.wol-bd-modifiers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0.25rem 0;
+}
+
+.wol-bd-subheading {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.wol-bd-mod-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.wol-bd-mod-item.applied {
+  background: rgba(34, 197, 94, 0.1);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.wol-bd-mod-item.not-met {
+  background: rgba(148, 163, 184, 0.05);
+  color: #64748b;
+}
+
+.wol-bd-final {
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.15);
+  font-weight: 600;
+}
+
+.wol-bd-final strong {
+  color: #38bdf8;
+  font-size: 1rem;
+}
+
+.wol-tool-btn {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  color: #cbd5e1;
+  padding: 0.4rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s;
+}
+
+.wol-tool-btn:hover {
+  border-color: #38bdf8;
+  color: #f8fafc;
+}
+
+.wol-tool-btn--active {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: #f59e0b;
+  color: #fcd34d;
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.25);
+}
+
+.wol-tool-btn--active:hover {
+  border-color: #fbbf24;
+  color: #fef08a;
+}
+
+/* 人生图鉴与死法收集册 (Life Codex) */
+.wol-codex-modal {
+  background: #0f172a;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 16px;
+  padding: 1.75rem;
+  max-width: 860px;
+  width: 92vw;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(168, 85, 247, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.wol-codex-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+  padding-bottom: 1rem;
+}
+
+.wol-codex-eyebrow {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #c084fc;
+  display: block;
+}
+
+.wol-codex-title {
+  font-size: 1.35rem;
+  color: #f8fafc;
+  margin: 0.25rem 0 0 0;
+}
+
+.wol-codex-stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.wol-codex-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.wol-codex-stat-item .label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.wol-codex-stat-item .val {
+  font-size: 1.1rem;
+  color: #f1f5f9;
+}
+
+.wol-codex-stat-item .val.highlight {
+  color: #a855f7;
+}
+
+.wol-codex-world-selector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.wol-codex-world-btn {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: #94a3b8;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wol-codex-world-btn.active {
+  background: #a855f7;
+  color: #ffffff;
+  font-weight: 600;
+  border-color: #a855f7;
+}
+
+.wol-codex-tabs {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+  padding-bottom: 0.5rem;
+}
+
+.wol-codex-tab {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.wol-codex-tab.active {
+  color: #c084fc;
+  background: rgba(168, 85, 247, 0.15);
+  font-weight: 600;
+}
+
+.wol-codex-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.75rem;
+  max-height: 45vh;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+.wol-codex-card {
+  background: rgba(30, 41, 59, 0.45);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.wol-codex-card.unlocked {
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.wol-codex-card.locked {
+  opacity: 0.5;
+  border-style: dashed;
+}
+
+.wol-codex-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wol-codex-card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.wol-codex-badge {
+  font-size: 0.7rem;
+  color: #c084fc;
+  background: rgba(168, 85, 247, 0.15);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+}
+
+.wol-codex-card-desc {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.wol-deaths-container {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.wol-death-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 6px;
+  padding: 0.6rem 0.85rem;
+}
+
+.wol-death-icon {
+  font-size: 1.25rem;
+}
+
+.wol-death-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.wol-death-cause {
+  color: #f87171;
+  font-size: 0.9rem;
+}
+
+.wol-death-meta {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.wol-empty-codex {
+  text-align: center;
+  color: #64748b;
+  padding: 2rem 0;
+  font-size: 0.9rem;
+}
+
+

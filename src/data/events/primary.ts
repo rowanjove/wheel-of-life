@@ -7,8 +7,8 @@ export const primaryEvents: GameEvent[] = [
   {
     ...event('primary', 'classmate-secret', '同学的秘密', '你发现同学暗中与圣殿接触。'),
     choices: [
-      { id: 'report', label: '告发', effects: [flag('reported-spirit-hall-contact'), relationship('spiritHall', -5), relationship('reputation', 3)] },
-      { id: 'silence', label: '沉默', effects: [flag('kept-classmate-secret'), relationship('spiritHall', 3)] },
+      { id: 'report', label: '告发', effects: [flag('reported-spirit-hall-contact'), relationship('sanctuary', -5), relationship('reputation', 3)] },
+      { id: 'silence', label: '沉默', effects: [flag('kept-classmate-secret'), relationship('sanctuary', 3)] },
     ],
   },
   event('primary', 'old-book', '老旧典籍', '你在图书室发现训练秘笈。', [{ type: 'growth-multiplier', amount: 0.1 }, knowledge('老旧训练秘笈')]),
@@ -23,7 +23,7 @@ export const primaryEvents: GameEvent[] = [
   event('primary', 'wandering-master', '流浪武灵修', '落魄灵修与你夜谈大陆秘闻。', [knowledge('大陆传说')]),
   event('primary', 'injury', '意外受伤', '修炼偏差使你元气受损。', [power(-3), title('坚韧')]),
   event('primary', 'shrek-student', '偶遇七星学生', '外出时遇见七星同龄学员。', [flag('met-shrek-student')]),
-  event('primary', 'young-tang-san', '偶遇传奇（幼年）', '街头一面令命运产生涟漪。', [{ type: 'hero-unlock' }]),
+  event('primary', 'young-hero', '偶遇宿敌（幼年）', '街头一面令命运产生涟漪。', [{ type: 'hero-unlock' }]),
   event('primary', 'abandoned-grave', '荒废武灵修之墓', '古墓中似乎藏着灵骨。', [flag('roll-common-soul-bone-30')]),
   event('primary', 'master-exam', '灵修考核大会', '你提前参加大区考核并通过。', [power(5), relationship('reputation', 3)]),
   event('primary', 'mysterious-rune', '神秘符文', '遗迹符文使命器产生共鸣。', [flag('innate-skill-unlocked')]),
@@ -31,8 +31,8 @@ export const primaryEvents: GameEvent[] = [
   {
     ...event('primary', 'spirit-hall-recruit', '圣殿征募', '圣殿暗探向你递来橄榄枝。'),
     choices: [
-      { id: 'join', label: '加入', effects: [flag('joined-spirit-hall'), relationship('spiritHall', 20)] },
-      { id: 'refuse', label: '拒绝', effects: [flag('spirit-hall-hatred'), relationship('spiritHall', -10)] },
+      { id: 'join', label: '加入', effects: [flag('joined-spirit-hall'), relationship('sanctuary', 20)] },
+      { id: 'refuse', label: '拒绝', effects: [flag('spirit-hall-hatred'), relationship('sanctuary', -10)] },
     ],
   },
   event('primary', 'classmate-gift', '同学的礼物', '好友在毕业前赠你灵导器。', [item('初级灵导器')]),

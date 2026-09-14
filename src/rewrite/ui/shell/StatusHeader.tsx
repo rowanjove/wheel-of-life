@@ -3,14 +3,14 @@ import { getLexicon } from '../../../content/lexicon'
 import { rewriteTalents } from '../../content/adapters'
 import type { RewriteCharacter } from '../../engine/model'
 import { contestRecordLabel, selectAge, soulMasterTitle } from '../../engine/selectors'
-import { ringQualityLabel } from '../../engine/soulRings'
+import { ringQualityLabel } from '../../engine/rings'
 import { mentorTrainingLabel } from '../../engine/schoolSelection'
 import {
-  normalizeSoulBones,
+  normalizeBones,
   QUALITY_LABELS,
   SLOT_LABELS,
-  SOUL_BONE_SLOTS,
-} from '../../engine/soulBones'
+  BONE_SLOTS,
+} from '../../engine/bones'
 import { WingedGem } from '../decor/CelestialDecor'
 
 function RefreshIcon() {
@@ -104,24 +104,24 @@ export function StatusHeader({ character, onRefresh }: StatusHeaderProps) {
             </dl>
           </section>
           <section>
-            <h2>命器</h2>
+            <h2>{lex.spiritLabel}</h2>
             <dl>
               <div><dt>数量</dt><dd>{character.spiritCount || '未定'}</dd></div>
               {character.spirits.map((spirit, index) => (
                 <div key={spirit.id}>
-                  <dt>命器{index + 1}</dt>
+                  <dt>{lex.spiritLabel}{index + 1}</dt>
                   <dd>{spirit.name}（{spirit.quality}）</dd>
                 </div>
               ))}
             </dl>
           </section>
           <section>
-            <h2>灵环</h2>
-            {character.soulRings.length === 0 ? (
-              <p className="rewrite-status-detail__empty">尚未获得灵环</p>
+            <h2>{lex.ringLabel}</h2>
+            {character.rings.length === 0 ? (
+              <p className="rewrite-status-detail__empty">尚未获得{lex.ringLabel}</p>
             ) : (
               <dl>
-                {character.soulRings.map((ring) => (
+                {character.rings.map((ring) => (
                   <div key={ring.id}>
                     <dt>第{ring.index}环</dt>
                     <dd>
@@ -133,10 +133,10 @@ export function StatusHeader({ character, onRefresh }: StatusHeaderProps) {
             )}
           </section>
           <section>
-            <h2>灵骨</h2>
+            <h2>{lex.boneLabel}</h2>
             <dl>
-              {SOUL_BONE_SLOTS.map((slot) => {
-                const bone = normalizeSoulBones(character.soulBones)[slot]
+              {BONE_SLOTS.map((slot) => {
+                const bone = normalizeBones(character.bones)[slot]
                 return (
                   <div key={slot}>
                     <dt>{SLOT_LABELS[slot]}</dt>

@@ -44,18 +44,18 @@ export function RewriteRouter({ run, dispatch, onRestart }: RewriteRouterProps) 
   if (
     run.flow.step === 'school-selection' ||
     /^year-\d+$/.test(run.flow.step) ||
-    /^soul-ring-\d+$/.test(run.flow.step) ||
+    /^(?:soul-)?ring-\d+$/.test(run.flow.step) ||
     run.flow.step === 'special-event' ||
     run.flow.step === 'event-count' ||
     run.flow.step === 'early-contest-offer' ||
     run.flow.step === 'ascension-offer' ||
+    run.flow.step === 'bone-choice' ||
     run.flow.step === 'soul-bone-choice' ||
     run.flow.step === 'hero-interaction' ||
     run.flow.step === 'hero-opportunity' ||
     run.flow.step === 'tang-san' ||
     run.flow.step === 'tang-san-conflict' ||
     run.flow.phase === 'contest' ||
-
     (run.flow.phase === 'soul-beast' && run.flow.step === 'cultivation-year-1')
   ) {
     return <WheelScreen run={run} dispatch={dispatch} />

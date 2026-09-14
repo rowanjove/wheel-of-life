@@ -100,12 +100,12 @@ describe('rewrite schools, years and events', () => {
         ...enrolledRun().character,
         currentYear: 16,
         level: 7,
-        soulRings: [{
+        rings: [{
           id: 'ring-1-10',
           index: 1,
           years: 10,
           quality: 'white',
-          skillName: '第1魂技',
+          skillName: '第1命技',
           description: '10年白色灵环。',
         }],
       },

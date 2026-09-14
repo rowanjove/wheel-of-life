@@ -36,7 +36,7 @@ it('shows the formal character status and celestial crest', async () => {
   expect(onRefresh).toHaveBeenCalledOnce()
 })
 
-it('lists acquired soul rings in the expanded panel', async () => {
+it('lists acquired rings in the expanded panel', async () => {
   const user = userEvent.setup()
   const base = createRun(42, '2026-06-20T00:00:00.000Z', 'run-1').character
   const character = {
@@ -44,12 +44,12 @@ it('lists acquired soul rings in the expanded panel', async () => {
     name: '林云深',
     race: 'human' as const,
     raceName: '人族',
-    soulRings: [{
+    rings: [{
       id: 'ring-1-1000',
       index: 1,
       years: 1000,
       quality: 'purple' as const,
-      skillName: '第一魂技',
+      skillName: '第一命技',
       description: '测试',
     }],
   }

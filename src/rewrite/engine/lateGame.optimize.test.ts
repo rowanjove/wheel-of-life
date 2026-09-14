@@ -6,7 +6,7 @@ import {
   confirmAscensionOffer,
   confirmContestRound,
   confirmEarlyContestOffer,
-  confirmSoulBeastRace,
+  confirmBeastRace,
   determineRewriteEnding,
   needsAscensionChoice,
 } from './lateGame'
@@ -85,12 +85,12 @@ describe('late game optimizations', () => {
     expect(determineRewriteEnding(ascended)).toBe('divine-companion')
   })
 
-  it('bootstraps soul beasts with high level and innate bones', () => {
-    const next = confirmSoulBeastRace(createRun(9, '2026-06-20T00:00:00.000Z', 'run-1'))
+  it('bootstraps beasts with high level and innate bones', () => {
+    const next = confirmBeastRace(createRun(9, '2026-06-20T00:00:00.000Z', 'run-1'))
 
     expect(next.character.level).toBe(80)
-    expect(next.character.soulBones?.head?.quality).toBe('legendary')
-    expect(next.character.flags).toContain('soul-beast-born')
+    expect(next.character.bones?.head?.quality).toBe('legendary')
+    expect(next.character.flags).toContain('beast-born')
   })
 
   it('branches endings after the spirit hall falls', () => {

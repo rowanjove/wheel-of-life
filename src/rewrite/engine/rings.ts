@@ -3,7 +3,7 @@ import type {
   Flow,
   RingQuality,
   RewriteRun,
-  SoulRingState,
+  RingState,
 } from './model'
 import type { ReplayableRng } from './rng'
 import { talentRingModifiers } from './talents'
@@ -186,7 +186,7 @@ export function rollYearsWithinBin(
 
 export function missingRingIndexes(
   level: number,
-  rings: readonly SoulRingState[],
+  rings: readonly RingState[],
 ): number[] {
   const owned = new Set(rings.map((ring) => ring.index))
   const unlocked = Math.min(9, Math.floor(level / 10))
@@ -197,9 +197,9 @@ export function missingRingIndexes(
   return missing
 }
 
-export function soulRingWheelOptions(run: RewriteRun): WheelOption<RingBin>[] {
-  const ringIndex = Number(run.flow.step.replace('soul-ring-', ''))
-  const previousYears = run.character.soulRings.at(-1)?.years ?? 0
+export function ringWheelOptions(run: RewriteRun): WheelOption<RingBin>[] {
+  const ringIndex = Number(run.flow.step.replace(/^(?:soul-)?ring-/, ''))
+  const previousYears = run.character.rings.at(-1)?.years ?? 0
   const bins = applyFlagRingAdjustments(
     buildLegalRingBins(
       ringIndex,
@@ -222,7 +222,7 @@ export function queueMissingRingActivities(
   run: RewriteRun,
   returnTo: Flow,
 ): RewriteRun {
-  const missing = missingRingIndexes(run.character.level, run.character.soulRings)
+  const missing = missingRingIndexes(run.character.level, run.character.rings)
   if (missing.length === 0) {
     return { ...run, flow: returnTo, pending: null }
   }

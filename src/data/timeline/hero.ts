@@ -4,32 +4,22 @@ export type HeroTimelineEntry = {
   event: string
 }
 
-/** Generic "era hero" timeline — no licensed IP. */
+/** 世界编年史重大历史节点 — 彻底摆脱特定作品英雄个人成长轨迹 */
 export const heroTimeline: HeroTimelineEntry[] = [
-  { year: 1, age: 0, event: '时代传奇降生，命运的齿轮开始转动。' },
-  { year: 6, age: 6, event: '时代传奇发现双命器，人生轨迹从此改变。' },
-  { year: 13, age: 13, event: '时代传奇进入七星学院，与伙伴相遇。' },
-  { year: 15, age: 15, event: '时代传奇参加大灵修联赛。' },
-  { year: 18, age: 18, event: '七星战队成形，踏上全陆大赛。' },
-  { year: 21, age: 21, event: '七星战队夺得全陆大赛冠军。' },
-  { year: 24, age: 24, event: '挚友牺牲，时代传奇封闭自身。' },
-  { year: 28, age: 28, event: '神位觉醒，时代传奇踏上封神之路。' },
-  { year: 35, age: 35, event: '时代传奇迈向神王之路。' },
-  { year: 42, age: 42, event: '时代传奇飞升天境。' },
+  { year: 1, age: 0, event: '新纪元启幕，古老秩序迎来最初的动荡。' },
+  { year: 6, age: 6, event: '各地异象频生，世间涌现出众多天赋异禀的新生代。' },
+  { year: 12, age: 12, event: '列国学府广开门庭，各路年轻才俊汇聚一堂。' },
+  { year: 18, age: 18, event: '四方大陆争端升级，各大阵营开始全面整军备战。' },
+  { year: 24, age: 24, event: '席卷全境的动荡爆发，旧日诸强格局剧变。' },
+  { year: 32, age: 32, event: '古老秘境重现人间，传说中的力量觉醒。' },
+  { year: 45, age: 45, event: '大陆迈入全新繁荣与秩序阶段，群雄并起。' },
 ]
 
 export function heroEventAt(year: number): string {
-  let current = '时代传奇尚未出生，大陆维持着旧日秩序。'
+  let current = '大陆维持着初立时期的旧日秩序。'
   for (const entry of heroTimeline) {
     if (year < entry.year) break
     current = entry.event
   }
   return current
 }
-
-/** @deprecated use heroEventAt — kept for engine call sites during migration */
-export function tangSanEventAt(year: number): string {
-  return heroEventAt(year)
-}
-
-export const tangSanTimeline = heroTimeline

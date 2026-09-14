@@ -165,9 +165,13 @@
 .rewrite-game .result-dialog,
 .rewrite-game .wheel-detail-overlay > section,
 .rewrite-dialog {
-  border-color: rgba(176,133,54,.42);
-  background: rgba(255,253,249,.94);
-  box-shadow: 0 28px 80px rgba(47,67,106,.18);
+  border: 1px solid rgba(195, 150, 65, .42);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .96);
+  box-shadow:
+    0 24px 64px rgba(25, 45, 75, .18),
+    0 2px 6px rgba(25, 45, 75, .06),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 .rewrite-game .result-dialog::before,

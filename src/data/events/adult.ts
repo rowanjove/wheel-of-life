@@ -4,7 +4,7 @@ import { event, flag, item, knowledge, power, relationship, title } from './help
 const explicit: Array<[string, string, string, any[]]> = [
   ['titled-road', '封号之路', '你有感于天地，踏上封号之路。', [power(20), title('封号之路')]],
   ['divine-contact', '天境接触', '你第一次感应到天境波动。', [flag('divine-contact')]],
-  ['tang-godhood', '传奇封神', '传奇踏上神位之路，大陆格局改变。', [flag('tang-san-godhood')]],
+  ['hero-godhood', '时代巨擘崛起', '顶尖强者的崛起重塑了大陆格局。', [flag('hero-godhood')]],
   ['spirit-hall-fall', '圣殿覆灭', '圣殿覆灭，旧关系迎来清算。', [flag('spirit-hall-fallen')]],
   ['ascension-chance', '天境飞升机缘', '天境召唤降临，百级者可以飞升。', [flag('ascension-choice')]],
   ['old-age', '老死之准备', '你感到寿元将尽，开始安排遗产。', [flag('lifespan-ending')]],
@@ -30,7 +30,7 @@ const supplements: Array<[string, string, string, any[]]> = [
   ['tang-reunion', '再会传奇', '多年后你再次见到传奇。', [{ type: 'hero-unlock' }]],
   ['divine-messenger', '神使降临', '天境使者传达一项试炼。', [flag('divine-trial')]],
   ['fate-reversal', '命运逆转', '一次失败被意外机缘改写。', [power(8), flag('fate-reversed')]],
-  ['ancient-tomb', '神王古墓', '古墓中留下神王时代的线索。', [knowledge('神王古墓'), flag('divine-bone-clue')]],
+  ['ancient-tomb', '上古古墓', '古墓中留下上古至尊时代的线索。', [knowledge('上古古墓'), flag('divine-bone-clue')]],
   ['world-tree', '世界树下', '世界树的气息滋养你的灵魂。', [power(12), { type: 'growth-multiplier', amount: 0.05 }]],
   ['ghost-city', '幽灵古城', '你进入一座只在夜间出现的古城。', [knowledge('幽灵古城'), item('幽魂信物')]],
   ['family-legacy', '家族传承', '你将多年所得留给下一代。', [title('家族先祖'), flag('legacy-prepared')]],

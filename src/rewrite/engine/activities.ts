@@ -10,7 +10,7 @@ import {
   queueHeroInteractionIfNeeded,
 } from './heroInteraction'
 import { ABSOLUTE_MAX_LEVEL, applyLevelChange } from './progression'
-import { queueMissingRingActivities } from './soulRings'
+import { queueMissingRingActivities } from './rings'
 import { createSeededRng } from './rng'
 import {
   advanceMentorYearFlags,
@@ -19,7 +19,7 @@ import {
   schoolWheelCandidates,
 } from './schoolSelection'
 import { resolveDeferredFlags } from './flagEffects'
-import { resolveBoneRollFlags } from './soulBones'
+import { resolveBoneRollFlags } from './bones'
 import { talentEventLevelBonus } from './talents'
 
 function schoolTier(run: RewriteRun): 'primary' | 'middle' | 'high' {

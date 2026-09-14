@@ -20,6 +20,6 @@ export const flag = (id: string): EventEffect => ({ type: 'flag', id })
 export const item = (id: string): EventEffect => ({ type: 'item', id })
 export const knowledge = (id: string): EventEffect => ({ type: 'knowledge', id })
 export const relationship = (
-  faction: 'spiritHall' | 'empire' | 'beasts' | 'reputation',
+  faction: 'sanctuary' | 'empire' | 'beasts' | 'reputation',
   amount: number,
 ): EventEffect => ({ type: 'relationship', faction, amount })

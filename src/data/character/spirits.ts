@@ -53,8 +53,8 @@ export const toolSpirits = createSpirits('tool', [
   ['tool-nine-color-lamp', '九彩宝灯（全属性）', '传说', 0.5],
   ['tool-chaos-mirror', '混沌镜', '传说', 0.3],
   ['tool-destiny-disk', '命运天盘', '传说', 0.2],
-  ['tool-creation-spear', '创世神矛', '神王', 0.1],
-  ['tool-douluo-shield', '灵元护盾', '神王', 0.1],
+  ['tool-creation-spear', '创世神矛', '至尊', 0.1],
+  ['tool-douluo-shield', '灵元护盾', '至尊', 0.1],
 ] as const)
 
 export const animalSpirits = createSpirits('animal', [
@@ -91,8 +91,8 @@ export const animalSpirits = createSpirits('animal', [
   ['animal-soul-beast-king', '灵兽之王（小斗 variant）', '传说', 0.5],
   ['animal-ancient-dragon', '上古神龙', '传说', 0.3],
   ['animal-nine-color-bird', '九彩神雀', '传说', 0.2],
-  ['animal-dream-iceworm', '天梦冰虫（弱化）', '传说', 0.2],
-  ['animal-jade-hand', '万年玉手', '神王', 0.1],
+  ['animal-dream-iceworm', '九幽霜虫', '传说', 0.2],
+  ['animal-jade-hand', '万年玉手', '至尊', 0.1],
 ] as const)
 
 export const natureSpirits = createSpirits('nature', [
@@ -114,8 +114,8 @@ export const natureSpirits = createSpirits('nature', [
   ['nature-heaven-earth', '天地玄黄', '神级', 1.5],
   ['nature-creation-light', '创世之光', '传说', 1],
   ['nature-void-annihilation', '虚空湮灭', '传说', 0.5],
-  ['nature-yin-yang', '太极阴阳', '神王', 0.3],
-  ['nature-primal-power', '原初神力', '神王', 0.2],
+  ['nature-yin-yang', '太极阴阳', '至尊', 0.3],
+  ['nature-primal-power', '原初神力', '至尊', 0.2],
 ] as const)
 
 export const spiritsByCategory = {

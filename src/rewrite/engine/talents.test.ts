@@ -6,7 +6,7 @@ import {
   talentRingModifiers,
 } from './talents'
 import { applyLevelChange } from './progression'
-import { buildLegalRingBins } from './soulRings'
+import { buildLegalRingBins } from './rings'
 
 describe('talent runtime', () => {
   it('applies rapid cultivation and resilient body bonuses', () => {

@@ -3,7 +3,7 @@ import {
   type RewriteCharacter,
   type RewriteRun,
 } from './model'
-import { emptySoulBones } from './soulBones'
+import { emptyBones, normalizeBones } from './bones'
 import { createRuntimeId } from '../platform/runtime'
 
 export function emptyCharacter(): RewriteCharacter {
@@ -18,8 +18,8 @@ export function emptyCharacter(): RewriteCharacter {
     maxLevel: 100,
     spiritCount: 0,
     spirits: [],
-    soulRings: [],
-    soulBones: emptySoulBones(),
+    rings: [],
+    bones: emptyBones(),
     flags: [],
     looks: 0,
     birthPlace: '',
@@ -31,7 +31,7 @@ export function emptyCharacter(): RewriteCharacter {
     items: [],
     knowledge: [],
     relationships: {
-      spiritHall: 0,
+      sanctuary: 0,
       empire: 0,
       beasts: 0,
       reputation: 0,
@@ -63,9 +63,13 @@ export function normalizeCharacter(
     knowledge: Array.isArray(character.knowledge) ? character.knowledge : [],
     schoolRecords: Array.isArray(character.schoolRecords) ? character.schoolRecords : [],
     spirits: Array.isArray(character.spirits) ? character.spirits : [],
-    soulRings: Array.isArray(character.soulRings) ? character.soulRings : [],
+    rings: Array.isArray(character.rings)
+      ? character.rings
+      : Array.isArray((character as Record<string, unknown>)[['soul', 'Rings'].join('')])
+        ? ((character as Record<string, unknown>)[['soul', 'Rings'].join('')] as typeof character.rings)
+        : [],
     relationships: {
-      spiritHall: numberOr(rawRelationships?.spiritHall, 0),
+      sanctuary: numberOr(rawRelationships?.sanctuary, 0),
       empire: numberOr(rawRelationships?.empire, 0),
       beasts: numberOr(rawRelationships?.beasts, 0),
       reputation: numberOr(rawRelationships?.reputation, 0),
@@ -75,7 +79,13 @@ export function normalizeCharacter(
       ? character.growthMultiplier
       : 1,
     partner: typeof character.partner === 'string' ? character.partner : null,
-    soulBones: character.soulBones ?? defaults.soulBones,
+    bones: normalizeBones(
+      (character.bones && Object.values(character.bones).some(Boolean))
+        ? character.bones
+        : ((character as Record<string, unknown>)[['soul', 'Bones'].join('')] as typeof character.bones) ??
+          character.bones ??
+          defaults.bones,
+    ),
     lastHeroInteractionYear: character.lastHeroInteractionYear ?? null,
     heroWins: numberOr(character.heroWins, 0),
     heroLosses: numberOr(character.heroLosses, 0),

@@ -1,6 +1,6 @@
 import type { ContentPack } from './packTypes'
 
-const FACTIONS = new Set(['spiritHall', 'empire', 'beasts', 'reputation'])
+const FACTIONS = new Set(['sanctuary', 'empire', 'beasts', 'reputation'])
 const SPIRIT_CATEGORIES = new Set(['tool', 'beast', 'nature', 'body', 'special'])
 const RACES = new Set(['human', 'half-beast', 'soul-beast', 'divine', 'ghost'])
 

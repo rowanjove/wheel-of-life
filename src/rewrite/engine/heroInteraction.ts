@@ -5,7 +5,7 @@ import { CONTEST_ROUNDS } from './contest'
 import type { WheelOption } from './creation'
 import type { RewriteCharacter, RewriteRun } from './model'
 import { applyLevelChange } from './progression'
-import { soulBonePowerBonus, tryRollSoulBone } from './soulBones'
+import { bonePowerBonus, tryRollBone } from './bones'
 import {
   canStartHeroInteraction,
   contestWinWeightBonus,
@@ -29,16 +29,16 @@ function ringPowerContribution(years: number): number {
 }
 
 export function playerCombatPower(character: RewriteCharacter): number {
-  const ringPower = character.soulRings.reduce(
+  const ringPower = character.rings.reduce(
     (sum, ring) => sum + ringPowerContribution(ring.years),
     0,
   )
   const titleBonus = character.titles.length * 50
   const talentBonus = character.talentId === 'natural-fighter' ? 80 : 0
-  return character.level * 10 + ringPower + titleBonus + talentBonus + soulBonePowerBonus(character)
+  return character.level * 10 + ringPower + titleBonus + talentBonus + bonePowerBonus(character)
 }
 
-export function tangSanCombatPower(year: number): number {
+export function heroCombatPower(year: number): number {
   const bands = getNarrativeContent().hero.powerBands
   for (const band of bands) {
     if (year < band.untilYear) return band.power
@@ -46,15 +46,12 @@ export function tangSanCombatPower(year: number): number {
   return bands.at(-1)?.power ?? 8_000
 }
 
-/** @deprecated alias — hero combat curve from active pack */
-export const heroCombatPower = tangSanCombatPower
-
 export function heroOutcomeWeights(
   character: RewriteCharacter,
 ): Record<HeroOutcome, number> {
   const player = playerCombatPower(character)
-  const tang = tangSanCombatPower(character.currentYear)
-  const ratio = player / tang
+  const heroPower = heroCombatPower(character.currentYear)
+  const ratio = player / heroPower
 
   if (ratio >= 1.15) {
     return { win: 62, draw: 18, loss: 20 }
@@ -111,15 +108,14 @@ function recordHeroInteraction(
       ...new Set([
         ...character.flags,
         `hero-${outcome}`,
-        `tang-san-${outcome}`,
       ]),
     ],
   }
 }
 
-function applyHeroLoss(character: RewriteCharacter, tang: number, player: number): RewriteCharacter {
-  const gap = tang - player
-  const loss = gap > tang * 0.25 ? -10 : -5
+function applyHeroLoss(character: RewriteCharacter, heroPower: number, player: number): RewriteCharacter {
+  const gap = heroPower - player
+  const loss = gap > heroPower * 0.25 ? -10 : -5
   return applyLevelChange(character, loss, 'hero')
 }
 
@@ -127,21 +123,21 @@ export function resolveHeroInteraction(
   run: RewriteRun,
   outcome: HeroOutcome,
 ): RewriteRun {
-  if (run.flow.step !== 'hero-interaction' &&
-    run.flow.step !== 'tang-san' &&
-    run.flow.step !== 'tang-san-conflict') {
+  const isHeroDuel = run.flow.step === 'hero-duel' || run.flow.step === 'tang-san'
+  const isHeroConflict = run.flow.step === 'hero-conflict' || run.flow.step === 'tang-san-conflict'
+
+  if (run.flow.step !== 'hero-interaction' && !isHeroDuel && !isHeroConflict) {
     throw new Error('当前不在主角互动')
   }
-  const mandatedStory =
-    run.flow.step === 'tang-san' || run.flow.step === 'tang-san-conflict'
+  const mandatedStory = isHeroDuel || isHeroConflict
   if (!mandatedStory && !canStartHeroInteraction(run.character)) {
     throw new Error('主角互动尚在冷却中')
   }
 
   const fromContestFinal =
-    run.flow.phase === 'contest' && run.flow.step === 'tang-san'
+    run.flow.phase === 'contest' && isHeroDuel
   const player = playerCombatPower(run.character)
-  const tang = tangSanCombatPower(run.character.currentYear)
+  const heroPower = heroCombatPower(run.character.currentYear)
   let character = recordHeroInteraction(run.character, outcome)
 
   if (outcome === 'win') {
@@ -187,7 +183,7 @@ export function resolveHeroInteraction(
     })
   }
 
-  character = applyHeroLoss(character, tang, player)
+  character = applyHeroLoss(character, heroPower, player)
   return finishHeroInteraction({ ...run, character })
 }
 
@@ -213,7 +209,7 @@ export function confirmHeroOpportunity(
       knowledge: [...new Set([...character.knowledge, opportunity.id])],
     }
   } else if (opportunity.kind === 'bone') {
-    const rolled = tryRollSoulBone(run, {
+    const rolled = tryRollBone(run, {
       quality: opportunity.quality,
       chance: 100,
       source: getNarrativeContent().hero.boneSource,

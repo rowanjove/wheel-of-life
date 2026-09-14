@@ -5,7 +5,7 @@ import {
   rewriteSchools,
   rewriteSpirits,
 } from '../content/adapters'
-import { BASE_RING_WEIGHTS } from './soulRings'
+import { BASE_RING_WEIGHTS } from './rings'
 
 describe('rewrite content coverage', () => {
   it('keeps the complete unique content catalog', () => {
@@ -57,7 +57,7 @@ describe('rewrite content coverage', () => {
     expect(effectTypes.size).toBeGreaterThan(0)
   })
 
-  it('keeps every soul-ring base probability row at 100 percent', () => {
+  it('keeps every ring base probability row at 100 percent', () => {
     Object.values(BASE_RING_WEIGHTS).forEach((weights) => {
       expect(Object.values(weights).reduce((sum, weight) => sum + weight, 0))
         .toBeCloseTo(100, 8)

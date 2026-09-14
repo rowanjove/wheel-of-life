@@ -1,4 +1,4 @@
-import type { HistoryEntry, RewriteRun } from '../engine/model'
+import { RUN_VERSION, type HistoryEntry, type RewriteRun } from '../engine/model'
 import { isValidSnapshot, validateRun } from './validation'
 import { createRuntimeId } from '../platform/runtime'
 
@@ -96,7 +96,7 @@ export function createRewriteRepository(storage: StorageLike) {
       const candidate = parsed as Partial<RewriteRun>
       if (!isValidSnapshot(candidate.snapshot)) return null
       const recovered: RewriteRun = {
-        version: 1,
+        version: RUN_VERSION,
         id: typeof candidate.id === 'string' ? candidate.id : createRuntimeId(),
         seed: Number.isInteger(candidate.seed) ? candidate.seed! : 1,
         rngCursor: candidate.snapshot.rngCursor,

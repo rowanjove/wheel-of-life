@@ -4,20 +4,20 @@ import type { WheelOption } from '../../engine/creation'
 import type { ActivityStatus } from '../../engine/model'
 import { WheelDetailDialog } from './WheelDetailDialog'
 
-/** High-contrast slice palette — avoids washed-out pastels on canvas. */
+/** High-contrast celestial slice palette — 典雅清亮的新国风玄幻色盘 */
 const SLICE_COLORS = [
-  '#385f73',
-  '#9b5f5c',
-  '#58715c',
-  '#ad7d35',
-  '#6b617b',
-  '#3f7773',
-  '#a15f3f',
-  '#547389',
-  '#8d5874',
-  '#6a7d4e',
-  '#99712c',
-  '#76658a',
+  '#2c547e', // 霁蓝
+  '#a43c3c', // 赤霄
+  '#2a735b', // 碧峦
+  '#9b6c26', // 曜金
+  '#684b8a', // 紫虚
+  '#1f6376', // 沧溟
+  '#a04a29', // 丹阳
+  '#3a618a', // 墨青
+  '#7e3d5e', // 绛紫
+  '#4c7034', // 青玉
+  '#8d5c22', // 琥珀
+  '#544773', // 幽微
 ] as const
 
 const DENSE_WHEEL_THRESHOLD = 12
@@ -27,7 +27,7 @@ const SEMANTIC_COLORS: Record<string, string> = {
   '#f7fbff': '#e9eff5',
   '#f3d66d': '#c69a3c',
   '#a98bd9': '#8f78bd',
-  '#273044': '#46536d',
+  '#273044': '#3a475e',
   '#d85d6f': '#c45c70',
   '#fff8d9': '#dfc477',
 }
@@ -45,24 +45,54 @@ function DiceIcon() {
   )
 }
 
-function truncateLabel(name: string, optionCount: number): string {
-  const chars = Array.from(name.trim())
-  if (chars.length === 0) return ''
-  // Once the wheel becomes denser than twelve slices, labels cease to be
-  // information and turn into overlapping glyphs. The option drawer below
-  // remains the canonical readable label surface for these wheels.
-  if (optionCount > DENSE_WHEEL_THRESHOLD) return ''
-  if (optionCount <= 6) return chars.slice(0, 8).join('')
-  if (optionCount <= 10) return chars.slice(0, 5).join('')
-  if (optionCount <= 16) return chars.slice(0, 3).join('')
-  if (optionCount <= 24) return chars.slice(0, 2).join('')
-  return chars[0] ?? ''
+/**
+ * 智能精炼扇区文字排版：
+ * 绝不再暴力清空，确保每个扇区都能呈现清晰易懂的文字标识。
+ */
+export function formatSliceLabel(name: string, optionCount: number): string {
+  const trimmed = name.trim()
+  if (!trimmed) return ''
+
+  // 针对年份区间做特殊压缩，保持核心年份清晰（例如 "黑色 10000–19999年" -> "1万~2万"）
+  const yearMatch = trimmed.match(/(\d+)[–-](\d+)年/)
+  if (yearMatch) {
+    const startY = Math.round(Number(yearMatch[1]) / 10000)
+    const endY = Math.round(Number(yearMatch[2]) / 10000)
+    return `${startY}~${endY}万`
+  }
+
+  const chars = Array.from(trimmed)
+  if (optionCount <= 6) {
+    return chars.slice(0, 8).join('')
+  }
+  if (optionCount <= 10) {
+    return chars.length > 5 ? `${chars.slice(0, 4).join('')}…` : trimmed
+  }
+  if (optionCount <= 16) {
+    return chars.length > 4 ? `${chars.slice(0, 3).join('')}…` : trimmed
+  }
+  // 极密集切片（17+）：提取前两到三字精炼标签，杜绝空白
+  return chars.length > 3 ? `${chars.slice(0, 2).join('')}…` : trimmed
+}
+
+/**
+ * 物理动力学转盘缓动函数：
+ * - 起步加速阶段 (0 ~ 0.12)：快速二次蓄力加速，带来强大的启动推力感；
+ * - 阻尼衰减阶段 (0.12 ~ 1.0)：平滑四次幂指数阻尼衰减，每一格划过指针清晰可感，终点干脆咬合。
+ */
+export function destinyWheelEasing(n: number): number {
+  const t = Math.max(0, Math.min(1, n))
+  if (t < 0.12) {
+    const p = t / 0.12
+    return 0.06 * (p * p)
+  }
+  const p = (t - 0.12) / 0.88
+  return 0.06 + 0.94 * (1 - Math.pow(1 - p, 3.8))
 }
 
 function sliceColor(index: number, fallback: string): string {
   const semantic = SEMANTIC_COLORS[fallback.toLowerCase()]
   if (semantic) return semantic
-  // Prefer curated palette; fall back only if option color is already strong.
   const curated = SLICE_COLORS[index % SLICE_COLORS.length]
   if (!fallback || fallback.startsWith('#e') || fallback.startsWith('#f') || fallback.startsWith('#d7') || fallback.startsWith('#cfc')) {
     return curated
@@ -77,7 +107,7 @@ function labelColorForBg(bg: string): string {
   const g = Number.parseInt(hex.slice(2, 4), 16)
   const b = Number.parseInt(hex.slice(4, 6), 16)
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
-  return luminance > 0.62 ? '#1a2433' : '#ffffff'
+  return luminance > 0.62 ? '#141e2a' : '#ffffff'
 }
 
 type DestinyWheelProps = {
@@ -99,7 +129,7 @@ export function DestinyWheel({
   status,
   onSpin,
   targetOptionId = null,
-  rotationDurationMs = 4000,
+  rotationDurationMs = 3600,
   onRotationEnd,
 }: DestinyWheelProps) {
   const [detail, setDetail] = useState<WheelOption | null>(null)
@@ -132,7 +162,7 @@ export function DestinyWheel({
     const items = options.map((option, index) => {
       const backgroundColor = sliceColor(index, option.color)
       return {
-        label: truncateLabel(option.name, count),
+        label: formatSliceLabel(option.name, count),
         backgroundColor,
         labelColor: labelColorForBg(backgroundColor),
         weight: Math.max(0.001, option.weight),
@@ -140,24 +170,27 @@ export function DestinyWheel({
       }
     })
 
+    // 基于 Canvas 基准尺寸 (500px) 设定的合理最大字号，避免高 DPI 或小屏幕下字号缩至 7-9px 模糊黏结
+    const baseFontSizeMax = count > 16 ? 22 : count > 10 ? 25 : count > 6 ? 28 : 32
+
     const wheel = new Wheel(el, {
       items,
       borderWidth: 0,
       borderColor: 'transparent',
-      lineWidth: count > 22 ? 0.95 : 1.35,
-      lineColor: 'rgba(255,255,255,.48)',
-      itemLabelFont: 'Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif',
-      itemLabelFontSizeMax: count > 8 ? 13 : 16,
-      itemLabelRadius: count > 8 ? 0.76 : 0.78,
-      itemLabelRadiusMax: count > 8 ? 0.2 : 0.24,
+      lineWidth: count > 18 ? 0.9 : 1.25,
+      lineColor: 'rgba(255,255,255,.55)',
+      itemLabelFont: 'bold 15px "Microsoft YaHei UI", "PingFang SC", "Noto Sans SC", sans-serif',
+      itemLabelFontSizeMax: baseFontSizeMax,
+      itemLabelRadius: count > 10 ? 0.82 : 0.80,
+      itemLabelRadiusMax: count > 10 ? 0.26 : 0.22,
       itemLabelAlign: 'right',
       itemLabelRotation: 0,
       itemLabelColors: items.map((item) => item.labelColor),
       radius: 0.96,
       isInteractive: false,
-      rotationResistance: -100,
+      rotationResistance: -50,
       pointerAngle: 0,
-      pixelRatio: Math.min(2, globalThis.devicePixelRatio || 1),
+      pixelRatio: Math.min(2.5, globalThis.devicePixelRatio || 1),
     })
 
     wheel.onRest = () => {
@@ -176,14 +209,19 @@ export function DestinyWheel({
       ? new ResizeObserver(() => safeResize())
       : null
     ro?.observe(el)
-    requestAnimationFrame(safeResize)
+    const rafId = typeof requestAnimationFrame !== 'undefined'
+      ? requestAnimationFrame(safeResize)
+      : null
 
     return () => {
+      if (rafId !== null && typeof cancelAnimationFrame !== 'undefined') {
+        cancelAnimationFrame(rafId)
+      }
       ro?.disconnect()
       wheel.remove()
       wheelRef.current = null
     }
-  }, [fingerprint, options, count])
+  }, [fingerprint])
 
   useEffect(() => {
     const wheel = wheelRef.current
@@ -205,9 +243,15 @@ export function DestinyWheel({
       const key = targetOptionId ?? ''
       if (spunForPending.current === key) return
       spunForPending.current = key
+      if (rotationDurationMs <= 50) {
+        wheel.spinToItem(index, 0, true, 0, 1)
+        onRestRef.current?.()
+        return
+      }
       const duration = Math.max(200, rotationDurationMs)
-      const revolutions = duration >= 2000 ? 4 : 1
-      wheel.spinToItem(index, duration, true, revolutions, 1)
+      // 动效调优：旋转 6 圈，带动力学缓动，兼顾高速掠影与平稳阻尼咬合
+      const revolutions = duration >= 1800 ? 6 : 1
+      wheel.spinToItem(index, duration, true, revolutions, 1, destinyWheelEasing)
       return
     }
 

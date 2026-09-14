@@ -5,7 +5,7 @@ import { getLexicon } from '../../../content/lexicon'
 import { CenteredResultDialog } from '../dialogs/CenteredResultDialog'
 import { DestinyWheel } from '../wheel/DestinyWheel'
 
-const FULL_DURATION_MS = 4000
+const FULL_DURATION_MS = 3600
 const REDUCED_DURATION_MS = 350
 
 function screenTitle(run: RewriteRun): string {
@@ -33,6 +33,7 @@ function screenTitle(run: RewriteRun): string {
     'tang-san': `再会${lex.heroName}`,
     'tang-san-conflict': `${lex.heroName}冲突`,
     'cultivation-year-1': '灵兽修炼',
+    'bone-choice': `${lex.boneLabel}抉择`,
     'soul-bone-choice': `${lex.boneLabel}抉择`,
     'early-contest-offer': '提前参赛',
     'ascension-offer': '飞升抉择',
@@ -49,7 +50,7 @@ function screenTitle(run: RewriteRun): string {
       ? `第 ${spirit[1]} ${lex.spiritLabel}类别`
       : `第 ${spirit[1]} ${lex.spiritLabel}`
   }
-  const ring = step.match(/^soul-ring-(\d+)$/)
+  const ring = step.match(/^(?:soul-)?ring-(\d+)$/)
   if (ring) return `第 ${ring[1]} ${lex.ringLabel}`
   const year = step.match(/^year-(\d+)$/)
   if (year) return `第 ${year[1]} 年`

@@ -109,6 +109,31 @@ export function PackPanel({ onPackChanged }: PackPanelProps) {
           </button>
         </div>
 
+        <div style={{ marginTop: '0.85rem', paddingTop: '0.85rem', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
+          <button
+            type="button"
+            style={{
+              width: '100%',
+              background: 'linear-gradient(135deg, #0284c7 0%, #38bdf8 100%)',
+              color: '#0f172a',
+              fontWeight: 700,
+              padding: '0.5rem 1rem',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '0.9rem',
+            }}
+            onClick={() => {
+              try {
+                globalThis.localStorage?.setItem('wol_mode', '2')
+              } catch {}
+              globalThis.location?.reload()
+            }}
+          >
+            ★ 体验 WOL 2.0 多世界命运轮盘（现代 / 武侠）
+          </button>
+        </div>
+
         <div className="pack-panel__remote">
           <input
             type="url"

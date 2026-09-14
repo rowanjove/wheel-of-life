@@ -3,7 +3,7 @@ import type { Flow, RewriteCharacter, RewriteRun } from './model'
 import type { ReplayableRng } from './rng'
 import { createSeededRng } from './rng'
 
-export type SoulBoneSlot =
+export type BoneSlot =
   | 'head'
   | 'torso'
   | 'left-arm'
@@ -12,24 +12,24 @@ export type SoulBoneSlot =
   | 'right-leg'
   | 'wing'
 
-export type SoulBoneQuality =
+export type BoneQuality =
   | 'common'
   | 'refined'
   | 'rare'
   | 'legendary'
   | 'divine'
 
-export type SoulBoneState = {
+export type BoneState = {
   id: string
-  slot: SoulBoneSlot
-  quality: SoulBoneQuality
+  slot: BoneSlot
+  quality: BoneQuality
   name: string
   source: string
 }
 
-export type SoulBoneMap = Record<SoulBoneSlot, SoulBoneState | null>
+export type BoneMap = Record<BoneSlot, BoneState | null>
 
-export const SOUL_BONE_SLOTS: SoulBoneSlot[] = [
+export const BONE_SLOTS: BoneSlot[] = [
   'head',
   'torso',
   'left-arm',
@@ -39,7 +39,7 @@ export const SOUL_BONE_SLOTS: SoulBoneSlot[] = [
   'wing',
 ]
 
-export const SLOT_LABELS: Record<SoulBoneSlot, string> = {
+export const SLOT_LABELS: Record<BoneSlot, string> = {
   head: '头骨',
   torso: '躯干骨',
   'left-arm': '左臂骨',
@@ -49,7 +49,7 @@ export const SLOT_LABELS: Record<SoulBoneSlot, string> = {
   wing: '翅骨',
 }
 
-export const QUALITY_LABELS: Record<SoulBoneQuality, string> = {
+export const QUALITY_LABELS: Record<BoneQuality, string> = {
   common: '普通',
   refined: '精良',
   rare: '罕见',
@@ -57,7 +57,7 @@ export const QUALITY_LABELS: Record<SoulBoneQuality, string> = {
   divine: '神级',
 }
 
-const BONE_NAMES: Record<SoulBoneQuality, string[]> = {
+const BONE_NAMES: Record<BoneQuality, string[]> = {
   common: ['青岩骨', '沉铁骨', '雾影骨'],
   refined: ['玄冰骨', '炎阳骨', '雷鸣骨'],
   rare: ['幽冥翼骨', '龙纹骨', '星辉骨'],
@@ -65,7 +65,7 @@ const BONE_NAMES: Record<SoulBoneQuality, string[]> = {
   divine: ['海神骨', '修罗神骨', '创世骨'],
 }
 
-export function emptySoulBones(): SoulBoneMap {
+export function emptyBones(): BoneMap {
   return {
     head: null,
     torso: null,
@@ -77,24 +77,24 @@ export function emptySoulBones(): SoulBoneMap {
   }
 }
 
-export function normalizeSoulBones(
-  value: Partial<SoulBoneMap> | undefined,
-): SoulBoneMap {
-  const base = emptySoulBones()
+export function normalizeBones(
+  value: Partial<BoneMap> | undefined,
+): BoneMap {
+  const base = emptyBones()
   if (!value) return base
-  for (const slot of SOUL_BONE_SLOTS) {
+  for (const slot of BONE_SLOTS) {
     if (value[slot]) base[slot] = value[slot]
   }
   return base
 }
 
-export function soulBonePowerBonus(character: RewriteCharacter): number {
+export function bonePowerBonus(character: RewriteCharacter): number {
   return occupiedBoneCount(character) * 200
 }
 
 export function occupiedBoneCount(character: RewriteCharacter): number {
-  const bones = normalizeSoulBones(character.soulBones)
-  return SOUL_BONE_SLOTS.filter((slot) => bones[slot] !== null).length
+  const bones = normalizeBones(character.bones)
+  return BONE_SLOTS.filter((slot) => bones[slot] !== null).length
 }
 
 function boneChanceBonus(talentId: string | null): number {
@@ -102,11 +102,11 @@ function boneChanceBonus(talentId: string | null): number {
 }
 
 function createBone(
-  slot: SoulBoneSlot,
-  quality: SoulBoneQuality,
+  slot: BoneSlot,
+  quality: BoneQuality,
   source: string,
   rng: ReplayableRng,
-): SoulBoneState {
+): BoneState {
   const names = BONE_NAMES[quality]
   const name = names[rng.integer(0, names.length - 1)]
   return {
@@ -118,9 +118,9 @@ function createBone(
   }
 }
 
-function pickEmptySlot(character: RewriteCharacter, rng: ReplayableRng): SoulBoneSlot | null {
-  const bones = normalizeSoulBones(character.soulBones)
-  const empty = SOUL_BONE_SLOTS.filter((slot) => bones[slot] === null)
+function pickEmptySlot(character: RewriteCharacter, rng: ReplayableRng): BoneSlot | null {
+  const bones = normalizeBones(character.bones)
+  const empty = BONE_SLOTS.filter((slot) => bones[slot] === null)
   if (empty.length === 0) return null
   return empty[rng.integer(0, empty.length - 1)]
 }
@@ -130,13 +130,13 @@ function rollChance(percent: number, talentId: string | null, rng: ReplayableRng
   return rng.next() * 100 < adjusted
 }
 
-type BoneRollSpec = { quality: SoulBoneQuality; chance: number; source: string }
+type BoneRollSpec = { quality: BoneQuality; chance: number; source: string }
 
 function parseBoneRollFlag(flag: string): BoneRollSpec | null {
   const match = flag.match(/^roll-(common|refined|rare|legendary|divine)(?:-soul)?-bone-(\d+)$/)
   if (!match) return null
   return {
-    quality: match[1] as SoulBoneQuality,
+    quality: match[1] as BoneQuality,
     chance: Number(match[2]),
     source: flag,
   }
@@ -144,45 +144,45 @@ function parseBoneRollFlag(flag: string): BoneRollSpec | null {
 
 const SPECIAL_BONE_FLAGS: Record<string, BoneRollSpec> = {
   'rare-bone-auction': { quality: 'rare', chance: 35, source: '灵骨拍卖' },
-  'divine-bone-clue': { quality: 'divine', chance: 10, source: '神王古墓' },
+  'divine-bone-clue': { quality: 'divine', chance: 10, source: '上古古墓' },
   'tiny-bone-chance': { quality: 'rare', chance: 5, source: '灵兽大战' },
 }
 
-export function awardSoulBone(
+export function awardBone(
   character: RewriteCharacter,
-  quality: SoulBoneQuality,
+  quality: BoneQuality,
   source: string,
   rng: ReplayableRng,
-): { character: RewriteCharacter; candidate: SoulBoneState | null; slot: SoulBoneSlot | null } {
+): { character: RewriteCharacter; candidate: BoneState | null; slot: BoneSlot | null } {
   const slot = pickEmptySlot(character, rng)
   if (!slot) return { character, candidate: null, slot: null }
   const candidate = createBone(slot, quality, source, rng)
-  const bones = normalizeSoulBones(character.soulBones)
+  const bones = normalizeBones(character.bones)
   return {
-    character: { ...character, soulBones: { ...bones, [slot]: candidate } },
+    character: { ...character, bones: { ...bones, [slot]: candidate } },
     candidate,
     slot,
   }
 }
 
-export function replaceSoulBone(
+export function replaceBone(
   character: RewriteCharacter,
-  slot: SoulBoneSlot,
-  candidate: SoulBoneState,
+  slot: BoneSlot,
+  candidate: BoneState,
 ): RewriteCharacter {
-  const bones = normalizeSoulBones(character.soulBones)
-  return { ...character, soulBones: { ...bones, [slot]: candidate } }
+  const bones = normalizeBones(character.bones)
+  return { ...character, bones: { ...bones, [slot]: candidate } }
 }
 
-export function queueSoulBoneChoice(
+export function queueBoneChoice(
   run: RewriteRun,
-  slot: SoulBoneSlot,
-  candidate: SoulBoneState,
+  slot: BoneSlot,
+  candidate: BoneState,
   returnTo: Flow,
 ): RewriteRun {
   return {
     ...run,
-    flow: { phase: run.flow.phase, step: 'soul-bone-choice', status: 'ready' },
+    flow: { phase: run.flow.phase, step: 'bone-choice', status: 'ready' },
     stack: [
       ...run.stack,
       {
@@ -201,13 +201,13 @@ export function queueSoulBoneChoice(
   }
 }
 
-export function soulBoneChoiceOptions(
+export function boneChoiceOptions(
   run: RewriteRun,
 ): WheelOption<'keep' | 'replace'>[] {
   const frame = run.stack.at(-1)
-  const slot = frame?.context.boneSlot as SoulBoneSlot | undefined
+  const slot = frame?.context.boneSlot as BoneSlot | undefined
   const candidateName = String(frame?.context.boneName ?? '新灵骨')
-  const current = slot ? normalizeSoulBones(run.character.soulBones)[slot] : null
+  const current = slot ? normalizeBones(run.character.bones)[slot] : null
   return [
     {
       id: 'bone-keep',
@@ -230,35 +230,36 @@ export function soulBoneChoiceOptions(
   ]
 }
 
-export function confirmSoulBoneChoice(
+export function confirmBoneChoice(
   run: RewriteRun,
   choice: 'keep' | 'replace',
 ): RewriteRun {
   const frame = run.stack.at(-1)
-  if (!frame || run.flow.step !== 'soul-bone-choice') {
+  if (!frame || (run.flow.step !== 'bone-choice' && run.flow.step !== 'soul-bone-choice')) {
     throw new Error('当前不在灵骨抉择')
   }
-  const slot = frame.context.boneSlot as SoulBoneSlot
+  const slot = frame.context.boneSlot as BoneSlot
   let character = run.character
   if (choice === 'replace') {
-    character = replaceSoulBone(character, slot, {
+    character = replaceBone(character, slot, {
       id: String(frame.context.boneId),
       slot,
-      quality: frame.context.boneQuality as SoulBoneQuality,
+      quality: frame.context.boneQuality as BoneQuality,
       name: String(frame.context.boneName),
       source: String(frame.context.boneSource),
     })
   }
-  return {
+  const resumed: RewriteRun = {
     ...run,
     character,
     flow: frame.returnTo,
     stack: run.stack.slice(0, -1),
     pending: null,
   }
+  return resolveBoneRollFlags(resumed)
 }
 
-export function tryRollSoulBone(
+export function tryRollBone(
   run: RewriteRun,
   spec: BoneRollSpec,
 ): RewriteRun {
@@ -271,25 +272,25 @@ export function tryRollSoulBone(
   const candidate = slot
     ? createBone(slot, spec.quality, spec.source, rng)
     : null
-  const cursor = rng.cursor()
 
   if (!slot || !candidate) {
-    const bones = normalizeSoulBones(run.character.soulBones)
-    const occupied = SOUL_BONE_SLOTS.filter((entry) => bones[entry] !== null)
+    const bones = normalizeBones(run.character.bones)
+    const occupied = BONE_SLOTS.filter((entry) => bones[entry] !== null)
     if (occupied.length === 0) {
-      return { ...run, rngCursor: cursor }
+      return { ...run, rngCursor: rng.cursor() }
     }
     const conflictSlot = occupied[rng.integer(0, occupied.length - 1)]
     const conflictCandidate = createBone(conflictSlot, spec.quality, spec.source, rng)
-    return queueSoulBoneChoice(
-      { ...run, rngCursor: cursor },
+    return queueBoneChoice(
+      { ...run, rngCursor: rng.cursor() },
       conflictSlot,
       conflictCandidate,
       run.flow,
     )
   }
 
-  const character = replaceSoulBone(run.character, slot, candidate)
+  const cursor = rng.cursor()
+  const character = replaceBone(run.character, slot, candidate)
   return {
     ...run,
     rngCursor: cursor,
@@ -308,13 +309,16 @@ export function resolveBoneRollFlags(run: RewriteRun): RewriteRun {
     const spec = parseBoneRollFlag(flag) ?? SPECIAL_BONE_FLAGS[flag]
     if (!spec) continue
     processed.add(flag)
-    next = tryRollSoulBone(next, spec)
+    next = tryRollBone(next, spec)
     next = {
       ...next,
       character: {
         ...next.character,
         flags: next.character.flags.filter((entry) => entry !== flag),
       },
+    }
+    if (next.flow.step === 'bone-choice' || next.flow.step === 'soul-bone-choice') {
+      break
     }
   }
   return next

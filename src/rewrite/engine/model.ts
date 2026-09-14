@@ -1,4 +1,4 @@
-export const RUN_VERSION = 1 as const
+export const RUN_VERSION = 2 as const
 
 export type Gender = 'male' | 'female'
 export type Race = 'human' | 'half-beast' | 'soul-beast' | 'divine' | 'ghost'
@@ -44,7 +44,7 @@ export type SpiritState = {
   fusionIds: string[]
 }
 
-export type SoulRingState = {
+export type RingState = {
   id: string
   index: number
   years: number
@@ -53,7 +53,7 @@ export type SoulRingState = {
   description: string
 }
 
-export type SoulBoneSlot =
+export type BoneSlot =
   | 'head'
   | 'torso'
   | 'left-arm'
@@ -62,22 +62,22 @@ export type SoulBoneSlot =
   | 'right-leg'
   | 'wing'
 
-export type SoulBoneQuality =
+export type BoneQuality =
   | 'common'
   | 'refined'
   | 'rare'
   | 'legendary'
   | 'divine'
 
-export type SoulBoneState = {
+export type BoneState = {
   id: string
-  slot: SoulBoneSlot
-  quality: SoulBoneQuality
+  slot: BoneSlot
+  quality: BoneQuality
   name: string
   source: string
 }
 
-export type SoulBoneMap = Record<SoulBoneSlot, SoulBoneState | null>
+export type BoneMap = Record<BoneSlot, BoneState | null>
 
 export type RewriteCharacter = {
   name: string
@@ -90,8 +90,8 @@ export type RewriteCharacter = {
   maxLevel: number
   spiritCount: 0 | 1 | 2 | 3 | 4
   spirits: SpiritState[]
-  soulRings: SoulRingState[]
-  soulBones: SoulBoneMap
+  rings: RingState[]
+  bones: BoneMap
   flags: string[]
   looks: number
   birthPlace: string
@@ -109,7 +109,7 @@ export type RewriteCharacter = {
   items: string[]
   knowledge: string[]
   relationships: {
-    spiritHall: number
+    sanctuary: number
     empire: number
     beasts: number
     reputation: number

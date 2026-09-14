@@ -11,6 +11,8 @@
     "typecheck": "tsc -b --pretty false",
     "test": "vitest",
     "test:ci": "vitest run",
+    "lint:ip": "node --experimental-strip-types scripts/ip-audit.ts --target src --tangsan-zero",
+    "simulate": "vite-node scripts/simulate.ts",
     "mini:install": "npm --prefix miniapp install",
     "build:weapp": "npm --prefix miniapp run build:weapp",
     "build:tt": "npm --prefix miniapp run build:tt"

@@ -47,9 +47,9 @@ describe('rewrite reducer wheel timing', () => {
     const stopped = reduceRewriteRun(animating, { type: 'ANIMATION_FINISHED' }, ringDeps)
     const confirmed = reduceRewriteRun(stopped, { type: 'CONFIRM_RESULT' }, ringDeps)
 
-    expect(confirmed.character.soulRings).toHaveLength(1)
-    expect(confirmed.character.soulRings[0].years).toBeGreaterThanOrEqual(10)
-    expect(confirmed.character.soulRings[0].years).toBeLessThanOrEqual(19)
+    expect(confirmed.character.rings).toHaveLength(1)
+    expect(confirmed.character.rings[0].years).toBeGreaterThanOrEqual(10)
+    expect(confirmed.character.rings[0].years).toBeLessThanOrEqual(19)
     expect(confirmed.flow.step).toBe('special-event')
   })
 

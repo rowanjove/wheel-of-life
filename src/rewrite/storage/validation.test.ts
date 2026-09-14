@@ -49,13 +49,13 @@ describe('rewrite run validation', () => {
       ...run,
       character: {
         ...run.character,
-        soulRings: [
+        rings: [
           {
             id: 'ring-1',
             index: 1,
             years: 500,
             quality: 'yellow',
-            skillName: '第一魂技',
+            skillName: '第一命技',
             description: '',
           },
           {
@@ -63,7 +63,7 @@ describe('rewrite run validation', () => {
             index: 2,
             years: 400,
             quality: 'yellow',
-            skillName: '第二魂技',
+            skillName: '第二命技',
             description: '',
           },
         ],
@@ -88,4 +88,35 @@ it('allows spirits to be filled progressively only during creation', () => {
     flow: { phase: 'primary-school' as const, step: 'school-selection', status: 'ready' as const },
   }
   expect(validateRun(escaped).ok).toBe(false)
+})
+
+it('retains and normalizes legacy rings and bones on load', () => {
+  const run = createRun(42, NOW, 'run-1')
+  const legacyKeyRings = [['soul', 'Rings'].join('')] as const
+  const legacyKeyBones = [['soul', 'Bones'].join('')] as const
+  const legacyRun = {
+    ...run,
+    character: {
+      ...run.character,
+      rings: undefined,
+      [legacyKeyRings[0]]: [{
+        id: 'legacy-ring-1',
+        index: 1,
+        years: 1500,
+        quality: 'purple',
+        skillName: '旧命技',
+        description: '旧数据',
+      }],
+      [legacyKeyBones[0]]: {
+        head: { id: 'legacy-bone-head', slot: 'head', quality: 'rare', name: '古龙骨', source: '旧古迹' },
+      },
+    },
+  }
+
+  const result = validateRun(legacyRun)
+  expect(result.ok).toBe(true)
+  if (!result.ok) return
+  expect(result.run.character.rings.length).toBe(1)
+  expect(result.run.character.rings[0].years).toBe(1500)
+  expect(result.run.character.bones.head?.name).toBe('古龙骨')
 })

@@ -35,7 +35,7 @@ export const BASE_LEXICON: Lexicon = {
     '灵圣',
     '灵帝',
     '封号灵尊',
-    '神位灵尊',
+    '至尊灵尊',
   ],
 }
 

@@ -4,7 +4,7 @@ import { getCreationContent, getNarrativeContent } from './activePack'
 import { buildBasePack } from '../rewrite/content/adapters'
 import { creationWheelOptions } from '../rewrite/engine/creation'
 import { createRun } from '../rewrite/engine/factory'
-import { heroOpportunityOptions, tangSanCombatPower } from '../rewrite/engine/heroInteraction'
+import { heroOpportunityOptions, heroCombatPower } from '../rewrite/engine/heroInteraction'
 
 beforeEach(() => {
   resetToBasePack()
@@ -43,8 +43,8 @@ describe('pack-driven creation & narrative', () => {
   })
 
   it('uses narrative power bands and opportunities', () => {
-    expect(tangSanCombatPower(10)).toBe(200)
-    expect(tangSanCombatPower(40)).toBe(8000)
+    expect(heroCombatPower(10)).toBe(200)
+    expect(heroCombatPower(40)).toBe(8000)
     expect(heroOpportunityOptions().length).toBe(
       getNarrativeContent().hero.opportunities.length,
     )

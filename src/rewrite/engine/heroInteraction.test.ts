@@ -41,10 +41,10 @@ describe('hero interaction runtime', () => {
     expect(canStartHeroInteraction(character)).toBe(false)
     expect(
       canStartHeroInteraction(
-        applyTalentAcquisition(character, 'tang-san-rival'),
+        applyTalentAcquisition(character, 'hero-rival'),
       ),
     ).toBe(true)
-    expect(heroInteractionCooldownYears('tang-san-rival')).toBe(1)
+    expect(heroInteractionCooldownYears('hero-rival')).toBe(1)
   })
 
   it('routes a winning interaction into the opportunity wheel', () => {
@@ -104,19 +104,19 @@ describe('hero interaction runtime', () => {
 
   it('shifts contest odds based on combat power', () => {
     const weak = contestDetailWeights(
-      { ...matureRun().character, level: 25, soulRings: [] },
+      { ...matureRun().character, level: 25, rings: [] },
       'final',
     )
     const strong = contestDetailWeights(
       {
         ...matureRun().character,
         level: 85,
-        soulRings: [{
+        rings: [{
           id: 'ring-1',
           index: 1,
           years: 5_000,
           quality: 'purple' as const,
-          skillName: '第一魂技',
+          skillName: '第一命技',
           description: '测试',
         }],
       },
@@ -129,12 +129,12 @@ describe('hero interaction runtime', () => {
     const strongCharacter = {
       ...matureRun().character,
       level: 85,
-      soulRings: [{
+      rings: [{
         id: 'ring-1',
         index: 1,
         years: 5_000,
         quality: 'purple' as const,
-        skillName: '第一魂技',
+        skillName: '第一命技',
         description: '测试',
       }],
     }
@@ -147,7 +147,7 @@ describe('hero interaction runtime', () => {
     expect(options.find((option) => option.id === 'contest-win')?.weight).toBe(strong.win)
   })
 
-  it('allows mandated tang san interaction during hero cooldown', () => {
+  it('allows mandated hero interaction during cooldown', () => {
     const run = {
       ...matureRun(),
       character: {
@@ -155,7 +155,7 @@ describe('hero interaction runtime', () => {
         lastHeroInteractionYear: matureRun().character.currentYear,
         heroWins: 1,
       },
-      flow: { phase: 'contest' as const, step: 'tang-san', status: 'ready' as const },
+      flow: { phase: 'contest' as const, step: 'hero-duel', status: 'ready' as const },
     }
 
     const after = resolveHeroInteraction(run, 'draw')
@@ -166,19 +166,19 @@ describe('hero interaction runtime', () => {
   it('increases combat power with rings and talents', () => {
     const character = {
       ...matureRun().character,
-      soulRings: [{
+      rings: [{
         id: 'ring-1',
         index: 1,
         years: 500,
         quality: 'purple' as const,
-        skillName: '第一魂技',
+        skillName: '第一命技',
         description: '测试',
       }],
       talentId: 'natural-fighter',
     }
     expect(playerCombatPower(character)).toBeGreaterThan(playerCombatPower({
       ...character,
-      soulRings: [],
+      rings: [],
       talentId: null,
     }))
   })

@@ -35,7 +35,7 @@ export const talentsByTier: Record<TalentTier, Talent[]> = {
     talent('divine-protection', '神明庇护', 'divine', '老死结局替换为飞升机缘'),
   ],
   legendary: [
-    talent('tang-san-rival', '传奇宿敌', 'legendary', '主角互动冷却缩短至1年'),
+    talent('hero-rival', '时代宿敌', 'legendary', '宿敌互动冷却缩短至1年'),
     talent('wheel-of-fate', '命运之轮', 'legendary', '所有转盘可在同一结果分组内重转'),
     talent('world-observer', '世界观察者', 'legendary', '显示所有扇区确切概率'),
   ],

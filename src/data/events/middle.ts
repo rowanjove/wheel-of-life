@@ -3,9 +3,9 @@ import { event, flag, item, knowledge, power, relationship, title } from './help
 
 const seeds: Array<[string, string, string, ReturnType<typeof power>[] | any[]]> = [
   ['shrek-seven', '七星战队传说', '七怪的传说开始流传。', [flag('heard-shrek-seven')]],
-  ['contest-selection', '大赛选拔', '学校开始组队备战全陆大赛。', [flag('school-team'), relationship('reputation', 5)]],
+  ['contest-selection', '大赛选拔', '学校开始组队备战精英联赛。', [flag('school-team'), relationship('reputation', 5)]],
   ['thousand-ring', '千年灵环', '你击杀千年灵兽，积累猎魂经验。', [flag('current-ring-double-chance')]],
-  ['spirit-hall-saint', '圣殿圣女', '圣殿重要人物造访本地。', [relationship('spiritHall', 5)]],
+  ['spirit-hall-saint', '圣殿圣女', '圣殿重要人物造访本地。', [relationship('sanctuary', 5)]],
   ['life-duel', '同门生死战', '理念冲突演化为一场决斗。', [power(4), flag('won-school-duel')]],
   ['continent-trip', '大陆之旅', '跨大陆游学拓展了你的视野。', [flag('map-unlocked'), knowledge('大陆地理')]],
   ['spirit-herb', '精魂草药', '稀有草药令功力大进。', [power(10)]],
@@ -26,7 +26,7 @@ const seeds: Array<[string, string, string, ReturnType<typeof power>[] | any[]]>
   ['ten-thousand-herb', '万年草药', '极品草药带来剧烈蜕变。', [power(15), flag('rest-next-year')]],
   ['spirit-assessment', '命器测评', '帝国评定提高了你的声望。', [relationship('reputation', 8)]],
   ['inheritance-awakening', '命器觉醒传承', '前代持有者残影传下秘技。', [flag('spirit-inheritance'), knowledge('命器隐藏技能')]],
-  ['contest-spectator', '全陆大赛观战', '观战使你掌握大赛情报。', [knowledge('大赛情报')]],
+  ['contest-spectator', '联赛观战', '观战使你掌握联赛情报。', [knowledge('联赛情报')]],
   ['family-change', '家族变故', '家人遭遇变故，你必须作出取舍。', [flag('family-crisis')]],
   ['beast-contract', '灵兽契约', '你与智慧灵兽签订协议。', [title('灵兽友人'), relationship('beasts', 15)]],
   ['device-prototype', '超级灵导器实验品', '高风险试验最终成功。', [power(10), item('灵导器实验品')]],

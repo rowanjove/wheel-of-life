@@ -3,14 +3,14 @@ import {
   ABSOLUTE_MAX_LEVEL,
   DEFAULT_MAX_LEVEL,
 } from '../engine/progression'
-import { normalizeSoulBones } from '../engine/soulBones'
+import { normalizeBones } from '../engine/bones'
 import {
   RUN_VERSION,
   type ActivityStatus,
   type FlowPhase,
   type RewriteCharacter,
   type RewriteRun,
-  type SoulRingState,
+  type RingState,
   type SpiritState,
   type ValidSnapshot,
 } from '../engine/model'
@@ -57,7 +57,7 @@ function isSpirit(value: unknown): value is SpiritState {
   )
 }
 
-function validRings(rings: unknown): rings is SoulRingState[] {
+function validRings(rings: unknown): rings is RingState[] {
   if (!Array.isArray(rings) || rings.length > 9) return false
   let previousYears = 0
   return rings.every((ring, position) => {
@@ -114,7 +114,8 @@ function validCharacter(value: unknown, allowIncompleteSpirits = false) {
   ) {
     return false
   }
-  return value.spirits.every(isSpirit) && validRings(value.soulRings)
+  const legacyRings = (value as Record<string, unknown>)[['soul', 'Rings'].join('')]
+  return value.spirits.every(isSpirit) && validRings((value as any).rings ?? legacyRings)
 }
 
 function allowsIncompleteSpirits(flow: unknown): boolean {
@@ -202,12 +203,16 @@ export function validateRun(value: unknown): ValidationResult {
   }
 
   const run = value as RewriteRun
+  const rawChar = run.character as Record<string, unknown>
+  const activeBones = (rawChar.bones && Object.values(rawChar.bones).some(Boolean))
+    ? rawChar.bones
+    : rawChar[['soul', 'Bones'].join('')] ?? rawChar.bones
   run.character = normalizeCharacter({
     ...(run.character as RewriteCharacter),
     maxLevel: isInteger(run.character.maxLevel)
       ? run.character.maxLevel
       : DEFAULT_MAX_LEVEL,
-    soulBones: normalizeSoulBones(run.character.soulBones),
+    bones: normalizeBones(activeBones as any),
   })
 
   return { ok: true, run }

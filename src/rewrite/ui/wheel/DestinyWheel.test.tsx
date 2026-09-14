@@ -56,3 +56,31 @@ it('switches dense wheels to an explicit readable-details hint', () => {
   expect(screen.getByTestId('destiny-wheel')).toHaveClass('destiny-wheel--dense')
   expect(screen.getByTestId('wheel-density-note')).toHaveTextContent('展开下方选项')
 })
+
+it('destinyWheelEasing generates smooth monotonic acceleration and damped deceleration', async () => {
+  const { destinyWheelEasing } = await import('./DestinyWheel')
+  expect(destinyWheelEasing(0)).toBe(0)
+  expect(destinyWheelEasing(1)).toBe(1)
+
+  // 验证单调递增性
+  let prev = -1
+  for (let i = 0; i <= 100; i++) {
+    const val = destinyWheelEasing(i / 100)
+    expect(val).toBeGreaterThanOrEqual(prev)
+    prev = val
+  }
+
+  // 验证起步二次加速（t=0.06 时位移较小，代表蓄力）
+  expect(destinyWheelEasing(0.06)).toBeLessThan(0.05)
+  // 验证终点前已大部分转完，阻尼平稳咬合（t=0.8 时位移已过 0.85）
+  expect(destinyWheelEasing(0.8)).toBeGreaterThan(0.85)
+})
+
+it('formatSliceLabel never blanks out dense wheel options', async () => {
+  const { formatSliceLabel } = await import('./DestinyWheel')
+  expect(formatSliceLabel('黑色 10000–19999年', 17)).toBe('1~2万')
+  expect(formatSliceLabel('凌霄剑', 17)).toBe('凌霄剑')
+  expect(formatSliceLabel('九宝琉璃塔', 17)).toBe('九宝…')
+  expect(formatSliceLabel('帝都', 4)).toBe('帝都')
+  expect(formatSliceLabel('冰封极北苦寒境', 8)).toBe('冰封极北…')
+})

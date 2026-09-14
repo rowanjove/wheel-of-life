@@ -106,8 +106,8 @@ describe('complete rewrite flow through public store commands', () => {
 
     expect(ended.character.spiritCount).toBe(4)
     expect(new Set(ended.character.spirits.map((spirit) => spirit.id)).size).toBe(4)
-    expect(ended.character.soulRings).toHaveLength(9)
-    expect(ended.character.soulRings.every((ring, index, rings) =>
+    expect(ended.character.rings).toHaveLength(9)
+    expect(ended.character.rings.every((ring, index, rings) =>
       index === 0 || ring.years > rings[index - 1].years,
     )).toBe(true)
     expect(ended.flow.phase).toBe('ending')

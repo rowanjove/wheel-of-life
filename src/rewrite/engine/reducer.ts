@@ -18,13 +18,13 @@ import { applyTalentAcquisition, adjustWheelOptions } from './talents'
 import {
   classifyRingYears,
   rollYearsWithinBin,
-  soulRingWheelOptions,
+  ringWheelOptions,
   type RingBin,
-} from './soulRings'
+} from './rings'
 import {
-  confirmSoulBoneChoice,
-  soulBoneChoiceOptions,
-} from './soulBones'
+  confirmBoneChoice,
+  boneChoiceOptions,
+} from './bones'
 import {
   activityWheelOptions,
   chooseEvent,
@@ -46,13 +46,13 @@ import {
   confirmEarlyContestOffer,
   continueAdultCycleEnd,
   continueAdultEndingCheck,
-  confirmSoulBeastCultivation,
-  confirmSoulBeastRace,
+  confirmBeastCultivation,
+  confirmBeastRace,
   earlyContestOfferOptions,
   finishLife,
   needsAscensionChoice,
   shouldEndAdultLife,
-  soulBeastCultivationOptions,
+  beastCultivationOptions,
   startContest,
 } from './lateGame'
 import type {
@@ -149,7 +149,7 @@ function confirmCreation(run: RewriteRun): RewriteRun {
     const race = payload as { race: RewriteRun['character']['race']; raceName: string }
     character = { ...character, race: race.race, raceName: race.raceName }
     if (race.race === 'soul-beast') {
-      return confirmSoulBeastRace({ ...run, character })
+      return confirmBeastRace({ ...run, character })
     }
     nextStep = 'spirit-count'
   } else if (step === 'spirit-count') {
@@ -196,13 +196,13 @@ function confirmCreation(run: RewriteRun): RewriteRun {
   }
 }
 
-function isSoulRingStep(step: string): boolean {
-  return /^soul-ring-[1-9]$/.test(step)
+function isRingStep(step: string): boolean {
+  return /^(?:soul-)?ring-[1-9]$/.test(step)
 }
 
 export function wheelOptionsForRun(run: RewriteRun): WheelOption[] {
   if (run.flow.phase === 'creation') return creationWheelOptions(run)
-  if (isSoulRingStep(run.flow.step)) return soulRingWheelOptions(run)
+  if (isRingStep(run.flow.step)) return ringWheelOptions(run)
   if (
     run.flow.step === 'hero-interaction' ||
     run.flow.step === 'tang-san' ||
@@ -211,7 +211,7 @@ export function wheelOptionsForRun(run: RewriteRun): WheelOption[] {
     return heroInteractionWheelOptions(run)
   }
   if (run.flow.step === 'hero-opportunity') return heroOpportunityOptions()
-  if (run.flow.step === 'soul-bone-choice') return soulBoneChoiceOptions(run)
+  if (run.flow.step === 'bone-choice' || run.flow.step === 'soul-bone-choice') return boneChoiceOptions(run)
   if (run.flow.step === 'early-contest-offer') return earlyContestOfferOptions()
   if (run.flow.step === 'ascension-offer') return ascensionOfferOptions()
   if (run.flow.phase === 'contest') return contestWheelOptionsForRun(run)
@@ -234,20 +234,20 @@ export function wheelOptionsForRun(run: RewriteRun): WheelOption[] {
   if (
     run.flow.phase === 'soul-beast' &&
     run.flow.step === 'cultivation-year-1'
-  ) return soulBeastCultivationOptions()
+  ) return beastCultivationOptions()
   return activityWheelOptions(run)
 }
 
-function confirmSoulRing(run: RewriteRun): RewriteRun {
+function confirmRing(run: RewriteRun): RewriteRun {
   if (run.pending?.kind !== 'wheel') throw new Error('没有待确认灵环结果')
   const payload = run.pending.payload as {
     ringIndex: number
     years: number
     quality: ReturnType<typeof classifyRingYears>
   }
-  const expectedIndex = run.character.soulRings.length + 1
+  const expectedIndex = run.character.rings.length + 1
   if (payload.ringIndex !== expectedIndex) throw new Error('灵环序号不连续')
-  const previousYears = run.character.soulRings.at(-1)?.years ?? 0
+  const previousYears = run.character.rings.at(-1)?.years ?? 0
   if (payload.years <= previousYears) throw new Error('新灵环年份必须高于上一枚')
 
   const frame = run.stack.at(-1)
@@ -256,14 +256,14 @@ function confirmSoulRing(run: RewriteRun): RewriteRun {
     ...run,
     character: {
       ...run.character,
-      soulRings: [
-        ...run.character.soulRings,
+      rings: [
+        ...run.character.rings,
         {
           id: `ring-${payload.ringIndex}-${payload.years}`,
           index: payload.ringIndex,
           years: payload.years,
           quality: payload.quality,
-          skillName: `第${payload.ringIndex}魂技`,
+          skillName: `第${payload.ringIndex}命技`,
           description: `${payload.years.toLocaleString()}年${payload.quality}灵环。`,
         },
       ],
@@ -301,7 +301,7 @@ export function reduceRewriteRun(
       ? dependencies.pickOption(options)
       : weightedPick(options, () => rng.next(), run.character.talentId)
     if (dependencies.pickOption) rng.next()
-    const soulRingPayload = isSoulRingStep(run.flow.step)
+    const ringPayload = isRingStep(run.flow.step)
       ? (() => {
           const bin = option.value as RingBin
           const years = rollYearsWithinBin(bin, rng)
@@ -336,14 +336,14 @@ export function reduceRewriteRun(
         kind: 'wheel',
         id: dependencies.nextId(),
         optionId: option.id,
-        title: isSoulRingStep(run.flow.step) && 'years' in (soulRingPayload as object)
-          ? `${(soulRingPayload as { years: number }).years.toLocaleString()}年灵环`
+        title: isRingStep(run.flow.step) && 'years' in (ringPayload as object)
+          ? `${(ringPayload as { years: number }).years.toLocaleString()}年灵环`
           : option.name,
         description: isYearStep
           ? `这一年在大陆的呼吸里缓缓展开。`
           : option.description,
         effects,
-        payload: soulRingPayload,
+        payload: ringPayload,
       },
     }
   }
@@ -357,7 +357,7 @@ export function reduceRewriteRun(
 
   if (command.type === 'CONFIRM_RESULT') {
     if (run.flow.phase === 'creation') return confirmCreation(run)
-    if (isSoulRingStep(run.flow.step)) return confirmSoulRing(run)
+    if (isRingStep(run.flow.step)) return confirmRing(run)
     if (run.flow.step === 'school-selection') {
       return confirmSchool(run, run.pending?.payload as RewriteSchoolContent)
     }
@@ -406,8 +406,8 @@ export function reduceRewriteRun(
         run.pending?.payload as HeroOpportunity,
       )
     }
-    if (run.flow.step === 'soul-bone-choice') {
-      return confirmSoulBoneChoice(
+    if (run.flow.step === 'bone-choice' || run.flow.step === 'soul-bone-choice') {
+      return confirmBoneChoice(
         run,
         run.pending?.payload as 'keep' | 'replace',
       )
@@ -428,7 +428,7 @@ export function reduceRewriteRun(
       run.flow.phase === 'soul-beast' &&
       run.flow.step === 'cultivation-year-1'
     ) {
-      return confirmSoulBeastCultivation(run, run.pending?.payload as number)
+      return confirmBeastCultivation(run, run.pending?.payload as number)
     }
     throw new Error('当前结果类型尚未接入')
   }
